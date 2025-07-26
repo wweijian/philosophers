@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/26 22:41:30 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/27 01:09:55 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,21 @@
 
 int	main(int ac, char **av)
 {
-	t_data	ph;
+	t_data			data;
+	t_philosopher	**philo;
 
 	if (!(ac == 5 || ac == 6))
 		return (1);
 	if (av[1][0] == '0' && av[1][1] == 0)
 		return (1);
-	if (!convert_arguments(ac, av, &ph))
+	if (!ph_init_data(ac, av, &data))
 		return (1);
-	printf(" ph.philo_count: %u\n ph.time_to_die: %u\n ph.time_to_eat: %u\n ph.time_to_sleep: %u\n", ph.philo_count, ph.time_to_die, ph.time_to_eat, ph.time_to_sleep);
+	printf(" data.count: %u\n data.time_to_die: %u\n data.time_to_eat: %u\n data.time_to_sleep: %u\n", data.count, data.time_to_die, data.time_to_eat, data.time_to_sleep);
 	if (ac == 6)
-		printf("ph.max_eat: %u\n", ph.max_eat);
-	if (!init_philosophers(&ph))
+		printf("data.max_eat: %u\n", data.max_eat);
+	if (!init_philosophers(&philo, data.count))
 		return (1);
-	printf("conversion SUCCESS!\n");
+	// ph_start_philo(philo, &data);
+	free_philosophers(philo);
+	printf("OPERATION SUCCESS!\n");
 }

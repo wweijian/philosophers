@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/26 20:36:26 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/27 00:54:31 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,23 @@ int	ft_atou(const char *nptr, unsigned int *res);
 int	check_digits(char **av);
 int	ft_atoi(const char *nptr, int *res);
 
-int	convert_arguments(int ac, char **av, t_data *ph_data)
+int	ph_init_data(int ac, char **av, t_data *ph)
 {
 	if (!check_digits(av))
 		return (0);
-	if (!ft_atoi(av[1], &(ph_data->philo_count)))
+	if (!ft_atoi(av[1], &(ph->count)))
 		return (0);
-	if (!ft_atou(av[2], &(ph_data->time_to_die)))
+	if (!ft_atou(av[2], &(ph->time_to_die)))
 		return (0);
-	if (!ft_atou(av[3], &(ph_data->time_to_eat)))
+	if (!ft_atou(av[3], &(ph->time_to_eat)))
 		return (0);
-	if (!ft_atou(av[4], &(ph_data->time_to_sleep)))
+	if (!ft_atou(av[4], &(ph->time_to_sleep)))
 		return (0);
 	if (ac == 6)
-		if (!ft_atou(av[5], &(ph_data->max_eat)))
+		if (!ft_atou(av[5], &(ph->max_eat)))
 			return (0);
+	ph->philo_died = 0;
+	ph->philo_ended = 0;
 	return (1);
 }
 
