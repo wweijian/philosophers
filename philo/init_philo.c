@@ -18,12 +18,12 @@ int	make_philo(t_data *ph_data, int index)
 	if (!ph_data->philos[index])
 		return (0);
 	ph_data->philos[index]->index = index;
-	ph_data->philos[index]->thread = NULL;
 	ph_data->philos[index]->parity = index % 2;
 	ph_data->philos[index]->times_eaten = 0;
 	ph_data->philos[index]->last_ate = 0;
 	ph_data->philos[index]->last_slept = 0;
 	ph_data->philos[index]->state = WAITING;
+	ph_data->philos[index]->fork.left = malloc(sizeof(pthread_mutex_t));
 	if (pthread_mutex_init(ph_data->philos[index]->fork.left, NULL)) //idk if i want to force a recursive
 		return (perror("make philo"), 0);
 	if (index == 0)
@@ -49,7 +49,7 @@ int	init_philosophers(t_data *ph_data)
 			printf("make philo failed??\n");
 			return(0); // need to destroy all the mutexes here
 		}
-		ph_data->philos[0]->left = ph_data->philos[ph_data->philo_count];
+		ph_data->philos[0]->left = ph_data->philos[ph_data->philo_count - 1];
 		i++;
 	}
 	return (1);
