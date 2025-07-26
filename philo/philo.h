@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/21 20:37:12 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/07/26 22:23:18 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,63 @@
 # include <pthread.h>
 # include <limits.h>
 
-// STRUCT
+/* ENUM */
+typedef enum s_parity
+{
+	EVEN,
+	ODD
+}	t_parity;
+
+typedef enum s_state
+{
+	WAITING,
+	EATING,
+	SLEEPING,
+	THINKING,
+	TAKE_FORK,
+	DEAD
+}	t_state;
+
+/* STRUCT */
+
+struct	s_philosopher;
+
+typedef struct s_fork
+{
+	pthread_mutex_t	*left;
+	pthread_mutex_t *(*right)(struct s_philosopher *);
+} t_fork;
+
+typedef struct s_philosopher
+{
+	unsigned int			index;
+	pthread_t				thread;
+	t_parity				parity;
+	unsigned int			times_eaten;
+	unsigned int			last_ate;
+	unsigned int			last_slept;
+	t_state					state;
+	t_fork					fork;
+	struct s_philosopher	*left;
+	struct s_philosopher	*right;
+}	t_philosopher;
+
 typedef struct s_data
 {
-	unsigned int	philo_count;
+	int				philo_count;
 	unsigned int	time_to_die;
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
 	unsigned int	max_eat;
-	int				error;
+	int				philo_died;
+	t_philosopher	**philos;
 }	t_data;
 
-// VALIDATE
-int		validate_arguments(int ac, char	**av);
-int		check_digits(char **av);
+/* INITIALIZING */
+int		convert_arguments(int ac, char **av, t_data *ph_data);
+int		init_philosophers(t_data *ph_data);
+void	init_data(t_data *ph);
 
-
-// UTILS
-int		ft_isdigit(char c);
-int		ft_atou(const char *nptr, unsigned int *res);
 
 
 #endif

@@ -3,20 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   convert.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/21 20:44:35 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/07/26 20:36:26 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+int	ft_isdigit(char c);
+int	ft_atou(const char *nptr, unsigned int *res);
+int	check_digits(char **av);
+int	ft_atoi(const char *nptr, int *res);
+
 int	convert_arguments(int ac, char **av, t_data *ph_data)
 {
 	if (!check_digits(av))
 		return (0);
-	if (!ft_atou(av[1], &(ph_data->philo_count)))
+	if (!ft_atoi(av[1], &(ph_data->philo_count)))
 		return (0);
 	if (!ft_atou(av[2], &(ph_data->time_to_die)))
 		return (0);
@@ -29,3 +34,61 @@ int	convert_arguments(int ac, char **av, t_data *ph_data)
 			return (0);
 	return (1);
 }
+
+int	ft_isdigit(char c)
+{
+	return ((c >= '0' && c <= '9'));
+}
+
+int	ft_atou(const char *nptr, unsigned int *res)
+{
+	int	i;
+
+	i = 0;
+	*res = 0;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		if (*res > UINT_MAX / 10 && (nptr[i] - '0') <= ((char) UINT_MAX % 10))
+			return (0);
+		*res = (nptr[i] - '0') + (*res * 10);
+		i++;
+	}
+	return (1);
+}
+
+int	ft_atoi(const char *nptr, int *res)
+{
+	int	i;
+
+	i = 0;
+	*res = 0;
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		if (*res > INT_MAX / 10 && (nptr[i] - '0') <= ((char) INT_MAX % 10))
+			return (0);
+		*res = (nptr[i] - '0') + (*res * 10);
+		i++;
+	}
+	return (1);
+}
+
+int	check_digits(char **av)
+{
+	int	i;
+	int	j;
+
+	i = 1;
+	while (av[i])
+	{
+		j = 0;
+		while(av[i][j])
+		{
+			if (!ft_isdigit(av[i][j]))
+				return (0);
+			j++;
+		}
+		i++;
+	}
+	return (1);
+}
+
