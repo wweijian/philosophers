@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/27 01:15:55 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/27 22:46:27 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@
 # include <sys/time.h>
 # include <pthread.h>
 # include <limits.h>
+
+/* ERROR MESSAGES */
+# define ERRMUT "mutex failed to be locked"
+# define ERRUNMUT "mutex failed to be unlocked"
+# define ERRMEM "malloc failed"
 
 /* ENUM */
 typedef enum s_parity
@@ -45,8 +50,8 @@ struct	s_philosopher;
 
 typedef struct s_fork
 {
-	pthread_mutex_t	*left;
-	pthread_mutex_t *(*right)(int);
+	pthread_mutex_t	left;
+	pthread_mutex_t *right;
 } t_fork;
 
 typedef struct s_data
@@ -56,24 +61,22 @@ typedef struct s_data
 	unsigned int	time_to_eat;
 	unsigned int	time_to_sleep;
 	unsigned int	max_eat;
-	int				philo_died;
+	long			philo_died;
 	int				philo_ended;
-	time_t			start_time;
 }	t_data;
 
 typedef struct s_philosopher
 {
 	unsigned int			index;
 	pthread_t				thread;
+	time_t					start_time;
+	t_data					*data;
 	t_parity				parity;
 	unsigned int			times_eaten;
 	unsigned int			last_ate;
 	unsigned int			last_slept;
 	t_state					state;
 	t_fork					fork;
-	struct s_philosopher	*left;
-	struct s_philosopher	*right;
-	t_data					*data;
 }	t_philosopher;
 
 /* INITIALIZING */
@@ -82,9 +85,16 @@ int		init_philosophers(t_philosopher ***philo, int count, t_data *data);
 void	init_data(t_data *ph);
 
 /* CLEAN UP */
-void	free_philosophers(t_philosopher **philo);
+void	free_philosophers(t_philosopher **philo, int count);
+void	error_msg(char *message);
 
 /* SIMULATION */
-// int	ph_start_philo(t_philosopher **philo, t_data *ph);
+int		ph_start_philo(t_philosopher **philo, int count);
+int		ph_sleep(t_philosopher *philo);
+
+/* UTILS */
+long	time_now(void);
+long	time_elapsed(long time, long start);
+void	print_state(long time, t_philosopher *philo, t_state state);
 
 #endif

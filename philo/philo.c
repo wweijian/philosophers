@@ -6,27 +6,45 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/27 01:19:49 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/28 01:06:31 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	ph_individual()
+void	*ph_individual(t_philosopher *philo)
 {
-	
+	printf("[%ld ms] philo%d\n", time_now() - philo->start_time, philo->index);
+	ph_sleep(philo);
+	return (NULL);
 }
 
-int	ph_start_philo(t_philosopher **philo, t_data *ph)
+int	ph_start_philo(t_philosopher **philo, int count)
 {
 	int		i; 
 
 	i = 0;
-	ph->start_time = time_now();
-	while(i < ph->count)
+	printf("COUNT: %d\n", count);
+	while(i < count)
 	{
-		if (pthread_create(philo[i]->thread, NULL, ph_individual, philo[i]))
+		philo[i]->start_time = time_now();
+		if (pthread_create(&(philo[i]->thread), NULL, (void *(*)(void *))ph_individual, philo[i]) > 0)
 			return (0);
+		i++;
+	}
+	while (i-- > 0)
+	{
+		printf("[ph_start_philo] i: %d\n", i);
+		if (philo[i] == NULL)
+			return (printf("NULL philo\n"), 0);
+		pthread_join(philo[i]->thread, NULL);
 	}
 	return (1);
 }
+
+// if i can only run 8 threads
+// then i must close the threads when i'm done using it
+// and open up again
+// how do i use join and detach to help me solve that? 
+
+// i think the issue is that the program ends too quickly for the threads to form
