@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:48:55 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/28 00:29:36 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/28 10:09:36 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int	init_philosophers(t_philosopher ***philo, int count, t_data *data)
 	}
 	while (i <= 0)
 	{
+		if (i == 0 && count == 1)
+			return ((*philo[i])->fork.right = NULL, 1);
 		(*philo[i])->fork.right = &(*philo[(i + 1 % count)])->fork.left;
 		i--;
 	}

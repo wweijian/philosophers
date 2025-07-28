@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/28 01:06:31 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/28 09:51:57 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	*ph_individual(t_philosopher *philo)
 {
 	printf("[%ld ms] philo%d\n", time_now() - philo->start_time, philo->index);
-	ph_sleep(philo);
+	ph_eat(philo);
 	return (NULL);
 }
 
@@ -32,13 +32,8 @@ int	ph_start_philo(t_philosopher **philo, int count)
 			return (0);
 		i++;
 	}
-	while (i-- > 0)
-	{
-		printf("[ph_start_philo] i: %d\n", i);
-		if (philo[i] == NULL)
-			return (printf("NULL philo\n"), 0);
-		pthread_join(philo[i]->thread, NULL);
-	}
+	// while (i-- > 0)
+		// pthread_join(philo[i]->thread, NULL);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/27 22:46:27 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/28 09:52:24 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ void	error_msg(char *message);
 /* SIMULATION */
 int		ph_start_philo(t_philosopher **philo, int count);
 int		ph_sleep(t_philosopher *philo);
+int		ph_eat(t_philosopher *philo);
 
 /* UTILS */
 long	time_now(void);

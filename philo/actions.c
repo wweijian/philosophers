@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/27 22:56:02 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/28 10:08:12 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@ int	ph_eat(t_philosopher *philo)
 	eat_time = time_now();
 	philo->data->max_eat++;
 	print_state(time_elapsed(eat_time, philo->start_time), philo, EATING);
+	printf("eating...");
 	usleep(philo->data->time_to_eat * 1000);
-	if (pthread_mutex_lock(&philo->fork.left) || pthread_mutex_lock(philo->fork.right))
+	printf("ate\n");
+	if (pthread_mutex_unlock(&philo->fork.left) || pthread_mutex_unlock(philo->fork.right))
 		return (philo->data->philo_ended = 1, error_msg(ERRUNMUT), 0);
 	ph_sleep(philo);
 	return (0);
