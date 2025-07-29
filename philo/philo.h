@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/28 09:52:24 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/29 18:33:20 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define ERRMUT "mutex failed to be locked"
 # define ERRUNMUT "mutex failed to be unlocked"
 # define ERRMEM "malloc failed"
+
+/* DEFINE DELAY */
+# define DELAY 1000000
 
 /* ENUM */
 typedef enum s_parity
@@ -63,18 +66,19 @@ typedef struct s_data
 	unsigned int	max_eat;
 	long			philo_died;
 	int				philo_ended;
+	pthread_mutex_t	print;
+	pthread_t		monitoring;
 }	t_data;
 
 typedef struct s_philosopher
 {
 	unsigned int			index;
 	pthread_t				thread;
-	time_t					start_time;
+	time_t					timer;
 	t_data					*data;
 	t_parity				parity;
 	unsigned int			times_eaten;
 	unsigned int			last_ate;
-	unsigned int			last_slept;
 	t_state					state;
 	t_fork					fork;
 }	t_philosopher;
@@ -89,13 +93,21 @@ void	free_philosophers(t_philosopher **philo, int count);
 void	error_msg(char *message);
 
 /* SIMULATION */
-int		ph_start_philo(t_philosopher **philo, int count);
-int		ph_sleep(t_philosopher *philo);
-int		ph_eat(t_philosopher *philo);
+void	ph_monitoring_thread(t_data *ph);
+int		ph_start_philo(t_philosopher **philo, int count, t_data *ph);
+
+void	*ph_sleep(void *data);
+void	*ph_eat(void *data);
+void	*ph_think(void *data);
+void	*ph_eat_sleep_think(void *data);
+void	*ph_think_eat_sleep(void *data);
+
 
 /* UTILS */
 long	time_now(void);
 long	time_elapsed(long time, long start);
 void	print_state(long time, t_philosopher *philo, t_state state);
+void	update_time_and_sleep(t_philosopher *philo, t_state state);
+
 
 #endif

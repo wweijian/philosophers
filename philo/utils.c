@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/27 22:55:47 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/29 19:17:56 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ long	time_elapsed(long time, long start)
 
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
-	printf("[%ld ms] philosopher %d ", time, philo->index);
+	pthread_mutex_lock(&philo->data->print);
+	printf("[%5ld ms] philosopher %d ", time, philo->index);
 	if (state == WAITING)
 		return ((void) printf("is WAITING\n"));
 	if (state == EATING)
@@ -40,4 +41,30 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 		return ((void) printf("is THINKING\n"));
 	if (state == DEAD)
 		return ((void) printf("is DEAD ):\n"));
+	if (state == TAKE_FORK)
+		return ((void) printf("has TAKEN A FORK\n"));
+	pthread_mutex_unlock(&philo->data->print);
+}
+
+void	update_time_and_sleep(t_philosopher *philo, t_state state)
+{
+	if (state == SLEEPING)
+	{
+		usleep(philo->data->time_to_sleep * 1000);
+		philo->timer += philo->data->time_to_sleep;
+		return ;
+	}
+	if (state == EATING)
+	{
+		philo->last_ate = philo->timer;
+		usleep(philo->data->time_to_eat * 1000);
+		philo->timer += philo->data->time_to_eat;
+		return ;
+	}
+	if (state == THINKING)
+	{
+		usleep(philo->data->time_to_eat * 1000);
+		philo->timer += philo->data->time_to_eat;
+		return ;
+	}
 }

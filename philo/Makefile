@@ -6,7 +6,7 @@
 #    By: weijian <weijian@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/07/27 23:25:13 by weijian          ###   ########.fr        #
+#    Updated: 2025/07/29 19:18:53 by weijian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,10 @@ all: ${NAME}
 
 ${NAME}: ${PHILO}
 	${CC} ${CFLAGS} ${PHILO} -o ${NAME}
+	@echo done
+
+10: ${NAME}
+	./${NAME} 10 10 20 10
 
 clean:
 	rm ${NAME}

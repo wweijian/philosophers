@@ -6,34 +6,51 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/28 09:51:57 by weijian          ###   ########.fr       */
+/*   Updated: 2025/07/29 19:22:06 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <limits.h>
 
-void	*ph_individual(t_philosopher *philo)
+void	*ph_monitoring(void *data)
 {
-	printf("[%ld ms] philo%d\n", time_now() - philo->start_time, philo->index);
-	ph_eat(philo);
+	t_data	*ph;
+
+	ph = (t_data *) data;
+	printf("[philo.c: ph_monitoring] monitoring started\n");
+	while (ph->philo_died == 0 && ph->philo_ended == 0);
 	return (NULL);
 }
 
-int	ph_start_philo(t_philosopher **philo, int count)
+int	ph_solo_philo(t_philosopher **philo, t_data *ph)
 {
-	int		i; 
+	(void) philo;
+	(void) ph;
+	return (0);
+}
+
+int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
+{
+	int		i;
 
 	i = 0;
-	printf("COUNT: %d\n", count);
+	pthread_create(&ph->monitoring, NULL, ph_monitoring, ph);
+	if (count == 1)
+		return (ph_solo_philo(philo, ph));
 	while(i < count)
 	{
-		philo[i]->start_time = time_now();
-		if (pthread_create(&(philo[i]->thread), NULL, (void *(*)(void *))ph_individual, philo[i]) > 0)
-			return (0);
+		if (i % 2 == 1)
+			if (pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
+				return (0);
+		if (i % 2 == 0)
+			if (pthread_create(&(philo[i]->thread), NULL, ph_think, philo[i]) > 0)
+				return (0);
 		i++;
 	}
-	// while (i-- > 0)
-		// pthread_join(philo[i]->thread, NULL);
+	usleep((useconds_t) LONG_MAX);
+	ph->philo_died = 1;
+	pthread_join(ph->monitoring, NULL);
 	return (1);
 }
 
