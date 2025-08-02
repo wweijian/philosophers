@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/29 19:17:56 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/02 14:45:38 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,21 @@ long	time_elapsed(long time, long start)
 
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
+	printf("philo %d is trying to print\n", philo->index);
 	pthread_mutex_lock(&philo->data->print);
 	printf("[%5ld ms] philosopher %d ", time, philo->index);
 	if (state == WAITING)
-		return ((void) printf("is WAITING\n"));
+		printf("is WAITING\n");
 	if (state == EATING)
-		return ((void) printf("is EATING\n"));
+		printf("is EATING\n");
 	if (state == SLEEPING)
-		return ((void) printf("is SLEEPING\n"));
+		printf("is SLEEPING\n");
 	if (state == THINKING)
-		return ((void) printf("is THINKING\n"));
+		printf("is THINKING\n");
 	if (state == DEAD)
-		return ((void) printf("is DEAD ):\n"));
+		printf("is DEAD ):\n");
 	if (state == TAKE_FORK)
-		return ((void) printf("has TAKEN A FORK\n"));
+		printf("has TAKEN A FORK\n");
 	pthread_mutex_unlock(&philo->data->print);
 }
 

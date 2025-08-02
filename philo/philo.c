@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/29 19:22:06 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/02 14:42:26 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	*ph_monitoring(void *data)
 	ph = (t_data *) data;
 	printf("[philo.c: ph_monitoring] monitoring started\n");
 	while (ph->philo_died == 0 && ph->philo_ended == 0);
+	usleep(1000000); // wait 1 second
 	return (NULL);
 }
 
