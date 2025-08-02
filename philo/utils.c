@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/02 14:45:38 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/02 15:26:59 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ long	time_elapsed(long time, long start)
 
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
-	printf("philo %d is trying to print\n", philo->index);
 	pthread_mutex_lock(&philo->data->print);
 	printf("[%5ld ms] philosopher %d ", time, philo->index);
 	if (state == WAITING)

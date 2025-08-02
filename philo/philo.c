@@ -6,12 +6,26 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/02 14:42:26 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/02 16:25:41 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 #include <limits.h>
+
+int	ph_max_eat(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->count)
+	{
+		if (data->ph[i]->times_eaten != data->max_eat)
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 void	*ph_monitoring(void *data)
 {
@@ -19,7 +33,7 @@ void	*ph_monitoring(void *data)
 
 	ph = (t_data *) data;
 	printf("[philo.c: ph_monitoring] monitoring started\n");
-	while (ph->philo_died == 0 && ph->philo_ended == 0);
+	while (ph->philo_died == 0 && ph_max_eat(ph))
 	usleep(1000000); // wait 1 second
 	return (NULL);
 }
@@ -33,10 +47,11 @@ int	ph_solo_philo(t_philosopher **philo, t_data *ph)
 
 int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	pthread_create(&ph->monitoring, NULL, ph_monitoring, ph);
+	usleep(1000000); // wait 1 second
 	if (count == 1)
 		return (ph_solo_philo(philo, ph));
 	while(i < count)

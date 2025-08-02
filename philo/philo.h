@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/29 18:33:20 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/02 16:19:36 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,38 +49,39 @@ typedef enum s_state
 
 /* STRUCT */
 
-struct	s_philosopher;
+struct s_philosopher;
 
 typedef struct s_fork
 {
 	pthread_mutex_t	left;
 	pthread_mutex_t *right;
-} t_fork;
+}	t_fork;
 
 typedef struct s_data
 {
-	int				count;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	unsigned int	max_eat;
-	long			philo_died;
-	int				philo_ended;
-	pthread_mutex_t	print;
-	pthread_t		monitoring;
+	int						count;
+	unsigned int			time_to_die;
+	unsigned int			time_to_eat;
+	unsigned int			time_to_sleep;
+	unsigned int			max_eat;
+	long					philo_died;
+	int						philo_ended;
+	pthread_mutex_t			print;
+	pthread_t				monitoring;
+	struct s_philosopher	**ph;
 }	t_data;
 
 typedef struct s_philosopher
 {
-	unsigned int			index;
-	pthread_t				thread;
-	time_t					timer;
-	t_data					*data;
-	t_parity				parity;
-	unsigned int			times_eaten;
-	unsigned int			last_ate;
-	t_state					state;
-	t_fork					fork;
+	unsigned int	index;
+	pthread_t		thread;
+	time_t			timer;
+	t_data			*data;
+	t_parity		parity;
+	unsigned int	times_eaten;
+	unsigned int	last_ate;
+	t_state			state;
+	t_fork			fork;
 }	t_philosopher;
 
 /* INITIALIZING */
