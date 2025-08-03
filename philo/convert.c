@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/07/29 18:33:48 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/03 10:48:26 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,14 @@ int	ph_init_data(int ac, char **av, t_data *ph)
 	ph->philo_ended = 0;
 	if (!check_digits(av))
 		return (0);
-	if (!ft_atoi(av[1], &(ph->count)))
+	if (!ft_atoi(av[1], &(ph->count)) || ph->count < 1)
 		return (0);
-	if (!ft_atou(av[2], &(ph->time_to_die)))
+	ph->parity = ph->count % 2;
+	if (!ft_atou(av[2], &(ph->time_to_die)) || ph->time_to_die < 1)
 		return (0);
-	if (!ft_atou(av[3], &(ph->time_to_eat)))
+	if (!ft_atou(av[3], &(ph->time_to_eat))|| ph->time_to_eat < 1)
 		return (0);
-	if (!ft_atou(av[4], &(ph->time_to_sleep)))
+	if (!ft_atou(av[4], &(ph->time_to_sleep)) || ph->time_to_sleep < 1)
 		return (0);
 	if (ac == 6)
 	{

@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/29 19:24:40 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/03 08:01:05 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void *ph_sleep(void *data)
 void *ph_think(void *data)
 {
 	t_philosopher	*philo;
-	philo = (t_philosopher *)data;
 	
+	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, THINKING);
 	update_time_and_sleep(philo, THINKING);
 	pthread_detach(philo->thread);
-	pthread_create(&philo->thread, NULL, ph_eat, philo);
+	pthread_create(&philo->thread, NULL, ph_eat, philo); // then maybe i shouldn't try to eat again. here
 	return (NULL);
 }
 
@@ -57,12 +57,11 @@ void *ph_eat(void *data)
 	print_state(philo->timer, philo, TAKE_FORK);
 	print_state(philo->timer, philo, EATING);
 	philo->times_eaten++;
-	printf("eating...");
 	update_time_and_sleep(philo, EATING);
-	printf("ate\n");
-	if (pthread_mutex_unlock(&philo->fork.left) || pthread_mutex_unlock(philo->fork.right))
+	if (pthread_mutex_unlock(&philo->fork.left) > 0 || pthread_mutex_unlock(philo->fork.right) > 0)
 		return (philo->data->philo_ended = 1, error_msg(ERRUNMUT), NULL);
 	ph_sleep(philo);
+	// i should call another eat here for the next guy
 	return (0);
 }
 

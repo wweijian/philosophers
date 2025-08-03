@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/02 16:25:41 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/03 10:42:59 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	*ph_monitoring(void *data)
 
 	ph = (t_data *) data;
 	printf("[philo.c: ph_monitoring] monitoring started\n");
-	while (ph->philo_died == 0 && ph_max_eat(ph))
+	while (ph->philo_died == 0 && ph_max_eat(ph) == 0 && ph->philo_ended == 0)
 	usleep(1000000); // wait 1 second
 	return (NULL);
 }
@@ -69,10 +69,3 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 	pthread_join(ph->monitoring, NULL);
 	return (1);
 }
-
-// if i can only run 8 threads
-// then i must close the threads when i'm done using it
-// and open up again
-// how do i use join and detach to help me solve that? 
-
-// i think the issue is that the program ends too quickly for the threads to form

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/02 16:19:36 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/03 10:45:23 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct s_data
 	unsigned int			max_eat;
 	long					philo_died;
 	int						philo_ended;
+	t_parity				parity;
 	pthread_mutex_t			print;
 	pthread_t				monitoring;
 	struct s_philosopher	**ph;
@@ -77,7 +78,6 @@ typedef struct s_philosopher
 	pthread_t		thread;
 	time_t			timer;
 	t_data			*data;
-	t_parity		parity;
 	unsigned int	times_eaten;
 	unsigned int	last_ate;
 	t_state			state;
