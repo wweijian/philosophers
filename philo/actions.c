@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/03 16:40:29 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 00:29:59 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,44 @@ void *ph_sleep(void *data)
 	if (!update_timer(philo, EATING, philo->data->time_to_eat)) // then what if philo ended? 
 		return (ph_die(philo)); 
 	ph_think(philo);
+	return (NULL);
 }
 
-void *ph_think(void *data)
+/* 
+	i should make some chanes to the time for ph_think to account for the following facts: 
+		first think should really just be 1 meal time -- after the first eat,
+		the thikning philo can just reach for the fork already
+	the second think should be waiting for 2 eats ... right??
+		yes, cos need to wait for 2 people to eat
+		but, should i pick up a fork first? because technically i can
+		i dont' have to 
+*/
+
+void	*ph_think(void *data)
 {
-	// how should i deal with the thinking? 
 	t_philosopher	*philo;
 
+	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, THINKING);
-	// either i think for extra time, or i wait for extra time
-	
+	if (!update_timer(philo, EATING, philo->data->time_to_eat * (philo->data->parity + 1)))
+		return (ph_die(philo));
+	ph_eat(philo);
+	return (NULL);
 }
 
+void	*ph_first_think(void *data)
+{
+	t_philosopher	*philo;
+
+	philo = (t_philosopher *)data;
+	print_state(philo->timer, philo, THINKING);
+	if (!update_timer(philo, EATING, philo->data->time_to_eat))
+		return (ph_die(philo));
+	ph_eat(philo);
+	return (NULL);
+}
+
+/* if philo die exactl y when it eats how? */
 void *ph_eat(void *data)
 {
 	t_philosopher	*philo;

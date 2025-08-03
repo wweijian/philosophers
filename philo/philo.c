@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/03 15:02:51 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 00:32:38 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,18 @@ void	*ph_monitoring(void *data)
 	return (NULL);
 }
 
-int	ph_solo_philo(t_philosopher **philo, t_data *ph)
+void	*ph_solo_philo(void *data)
 {
-	(void) philo;
-	(void) ph;
-	return (0);
+	t_philosopher	*philo;
+
+	philo = (t_philosopher *)data;
+	if (pthread_mutex_lock(&philo->fork.left) > 0)
+		return (philo->data->philo_ended = 1, error_msg(ERRMUT), NULL);
+	print_state(philo->timer, philo, THINKING);
+	print_state(philo->timer, philo, TAKE_FORK);
+	philo->timer += philo->data->time_to_die;
+	ph_die(philo);
+	return (NULL);
 }
 
 int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
@@ -52,17 +59,19 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 	i = 0;
 	pthread_create(&ph->monitoring, NULL, ph_monitoring, ph);
 	usleep(1000000); // wait 1 second
-	if (count == 1)
-		return (ph_solo_philo(philo, ph));
 	while(i < count)
 	{
+		if (count == 1)
+			if (pthread_create(&(philo[i]->thread), NULL, ph_solo_philo, philo[i]) > 0)
+				return (0);
 		if (i % 2 == 1)
 			if (pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
 				return (0);
-		// if (i % 2 == 0 && ph->parity == EVEN && i == count - 1)
-			//something think
-		if (i % 2 == 0)
+		if (i % 2 == 0 && ph->parity == EVEN && i == count - 1)
 			if (pthread_create(&(philo[i]->thread), NULL, ph_think, philo[i]) > 0)
+				return (0);
+		if (i % 2 == 0)
+			if (pthread_create(&(philo[i]->thread), NULL, ph_first_think, philo[i]) > 0)
 				return (0);
 		i++;
 	}

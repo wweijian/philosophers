@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/03 11:43:48 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 00:19:23 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,8 @@ int	main(int ac, char **av)
 	free_philosophers(philo, data.count);
 	printf("OPERATION SUCCESS!\n");
 }
+
+/*	NOTES:
+	 not sure if i accounted for the fact if any of the numbers being 0
+	 and how does that matter? 
+*/

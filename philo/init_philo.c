@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:48:55 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/29 16:31:03 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 00:32:14 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	make_philo(t_philosopher **philo, int index, t_data *data)
 		return (0);
 	printf("[init_philo.c: make_philo] index: %d\n", index);
 	philo[index]->index = index;
-	philo[index]->parity = index % 2;
 	philo[index]->times_eaten = 0;
 	philo[index]->last_ate = 0;
 	philo[index]->state = WAITING;

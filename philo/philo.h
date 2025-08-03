@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/03 16:31:46 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 00:29:26 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void	error_msg(char *message);
 void	ph_monitoring_thread(t_data *ph);
 int		ph_start_philo(t_philosopher **philo, int count, t_data *ph);
 
+void 	*ph_die(void *data);
 void	*ph_sleep(void *data);
 void	*ph_eat(void *data);
 void	*ph_think(void *data);
-void	*ph_eat_sleep_think(void *data);
-void	*ph_think_eat_sleep(void *data);
+void	*ph_first_think(void *data);
 
 
 /* UTILS */

@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/03 16:44:32 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/03 23:56:03 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ long	time_elapsed(long time, long start)
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
 	pthread_mutex_lock(&philo->data->print); // if philo die or exit, it should block print
+	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
+		return (pthread_mutex_unlock(&philo->data->print), (void) 0);
 	printf("[%5ld ms] philosopher %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is WAITING\n");
