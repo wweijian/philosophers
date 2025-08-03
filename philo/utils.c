@@ -29,7 +29,7 @@ long	time_elapsed(long time, long start)
 
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
-	pthread_mutex_lock(&philo->data->print);
+	pthread_mutex_lock(&philo->data->print); // if philo die or exit, it should block print
 	printf("[%5ld ms] philosopher %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is WAITING\n");
