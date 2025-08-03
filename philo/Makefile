@@ -6,7 +6,7 @@
 #    By: weijian <weijian@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/07/29 19:18:53 by weijian          ###   ########.fr        #
+#    Updated: 2025/08/03 15:46:18 by weijian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,8 +17,8 @@ CFLAGS = -Wall -Werror -Wextra -g -O0 -Iphilo/
 
 PHILO_DIR =
 PHILO = main.c \
-		convert.c init_philo.c \
-		philo.c actions.c \
+		init_data.c init_philo.c \
+		philo.c actions.c update.c \
 		utils.c exit.c
 
 # PHILO := $(addprefix ${PHILO_DIR}, ${PHILO})

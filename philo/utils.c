@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/02 15:26:59 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/03 16:44:32 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,38 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	pthread_mutex_unlock(&philo->data->print);
 }
 
-void	update_time_and_sleep(t_philosopher *philo, t_state state)
+int	update_timer(t_philosopher *philo, t_state state, long action_time)
 {
-	if (state == SLEEPING)
+	// TOCHECK: check if will die, need to verify the = too 
+	if (philo->timer + action_time >= philo->last_ate + philo->data->time_to_die)
 	{
-		usleep(philo->data->time_to_sleep * 1000);
-		philo->timer += philo->data->time_to_sleep;
-		return ;
+		usleep((philo->data->time_to_die + philo->last_ate - philo->timer) * 1000);
+		philo->timer = philo->data->time_to_die + philo->last_ate;
+		return (0);
 	}
+	usleep(action_time * 1000);
+	philo->timer += action_time;
+	if (state == EATING)
+		philo->last_ate = philo->timer;
+	return (1);
+}
+
+/* void	update_time_and_sleep(t_philosopher *philo, t_state state)
+{
 	if (state == EATING)
 	{
 		philo->last_ate = philo->timer;
 		usleep(philo->data->time_to_eat * 1000);
-		philo->timer += philo->data->time_to_eat;
+		if (philo->data->time_to_eat > philo->data->time_to_die)
+			philo->timer += philo->data->time_to_die - philo->last_ate;
+		else
+			philo->timer += philo->data->time_to_eat;
+		return ;
+	}
+	if (state == SLEEPING)
+	{
+		usleep(philo->data->time_to_sleep * 1000);
+		philo->timer += philo->data->time_to_sleep;
 		return ;
 	}
 	if (state == THINKING)
@@ -67,4 +86,4 @@ void	update_time_and_sleep(t_philosopher *philo, t_state state)
 		philo->timer += philo->data->time_to_eat;
 		return ;
 	}
-}
+} */

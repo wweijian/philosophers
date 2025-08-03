@@ -42,9 +42,14 @@ increments timing (usleep) -> not super necessary but it helps to synchronize th
 		--> i also think changes need to make to the monitoring script so that people have time to die properly 
 		i can just use the monitoring script to detach everyone too i guess
 
+Always print first then usleep
+
 6 scenarios in terms of eat/sleep/die
 for even:
-	if time_to_eat < time_to_die (odd eat, even thinks then die, no sleep)
-	if time_to_eat + time_to_sleep < time_to_die (eat, sleep then die)
+	if time_to_eat < time_to_die (odd: eat, even: thinks then die, no sleep)
+	if time_to_eat + time_to_sleep < time_to_die (odd: eat, sleep then die)
 	if time_to_eat + time_to_sleep => time_to_die (no die)
 for odd:
+	if time_to_eat < time_to_die (odd: eat, even: thinks then die, no sleep)
+	if time_to_eat * 2 < time_to_die (odd: eat and sleep, even: eat, last: die)
+	only survives if time_to_eat > 2 x time_to_die 

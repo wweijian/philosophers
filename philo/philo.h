@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/03 10:45:23 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/03 16:31:46 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ void	*ph_think_eat_sleep(void *data);
 long	time_now(void);
 long	time_elapsed(long time, long start);
 void	print_state(long time, t_philosopher *philo, t_state state);
-void	update_time_and_sleep(t_philosopher *philo, t_state state);
-
+int		update_timer(t_philosopher *philo, t_state state, long action_time);
 
 #endif

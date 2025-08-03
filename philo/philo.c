@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/03 10:42:59 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/03 15:02:51 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 		if (i % 2 == 1)
 			if (pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
 				return (0);
+		// if (i % 2 == 0 && ph->parity == EVEN && i == count - 1)
+			//something think
 		if (i % 2 == 0)
 			if (pthread_create(&(philo[i]->thread), NULL, ph_think, philo[i]) > 0)
 				return (0);
