@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/04 21:43:29 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/05 03:10:59 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,14 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 			if (pthread_create(&(philo[i]->thread), NULL, ph_solo_philo, philo[i]) > 0)
 				return (0);
 		}
-		else if (i % 2 == 1 && pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
-				return (0);
-		else if (i % 2 == 0 && ph->parity == ODD && i == count - 1)
+		else if (i % 2 == 1)
 		{
-			if (pthread_create(&(philo[i]->thread), NULL, ph_think, philo[i]) > 0)
+			if(pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
 				return (0);
 		}
 		else if (i % 2 == 0)
 		{
-			if (pthread_create(&(philo[i]->thread), NULL, ph_first_think, philo[i]) > 0)
+			if (pthread_create(&(philo[i]->thread), NULL, ph_think, philo[i]) > 0)
 				return (0);
 		}
 		i++;

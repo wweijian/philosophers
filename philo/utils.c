@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/05 00:11:54 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/05 04:40:27 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,15 +52,12 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 {
 	// TOCHECK: check if will die, need to verify the = too
 	if (state == EATING)
-	{
-		if (philo->timer < philo->last_ate + philo->data->time_to_die)
-		{
-			usleep((philo->data->time_to_die + philo->last_ate - philo->timer) * 1000);
-			philo->timer = philo->data->time_to_die + philo->last_ate;
-			return (0);
-		}
-	}
-	else if (philo->timer + action_time >= philo->last_ate + philo->data->time_to_die)
+		philo->last_ate = philo->timer;
+	// if (philo->index == 1)
+	// 	printf("philo->timer %ld + action_time %ld > \nphilo->last_ate %u + philo->data->time_to_die %u ", philo->timer, action_time, philo->last_ate,philo->data->time_to_die );
+	if (philo->timer + action_time > philo->last_ate + philo->data->time_to_die 
+		|| (state != THINKING && philo->timer + action_time
+			== philo->last_ate + philo->data->time_to_die))
 	{
 		usleep((philo->data->time_to_die + philo->last_ate - philo->timer) * 1000);
 		philo->timer = philo->data->time_to_die + philo->last_ate;
@@ -69,7 +66,7 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 	usleep(action_time * 1000);
 	philo->timer += action_time;
 	if (state == EATING)
-		philo->last_ate = philo->timer;
+		printf("philo->timer %ld\n", philo->timer);
 	return (1);
 }
 
@@ -83,6 +80,29 @@ int	check_death(t_philosopher *philo)
 		death = 1;
 	pthread_mutex_unlock(&philo->data->death);
 	return (death);
+}
+
+long	count_think_time(t_philosopher *philo)
+{
+	if (philo->data->parity == EVEN)
+	{
+		if (philo->times_eaten == 0)
+			return (philo->data->time_to_eat);
+		else
+			return (philo->data->time_to_eat - philo->data->time_to_sleep);
+	}
+	else
+	{
+		if (philo->times_eaten == 0)
+		{
+			if (philo->index == 0)
+				return(philo->data->time_to_eat * 2);
+			else
+				return(philo->data->time_to_eat);
+		}
+		else
+			return(philo->data->time_to_eat * 2 - philo->data->time_to_eat);
+	}
 }
 
 /* void	update_time_and_sleep(t_philosopher *philo, t_state state)

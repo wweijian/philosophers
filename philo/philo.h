@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/04 19:58:09 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/05 04:34:30 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ void 	*ph_die(void *data);
 void	*ph_sleep(void *data);
 void	*ph_eat(void *data);
 void	*ph_think(void *data);
-void	*ph_first_think(void *data);
 
 
 /* UTILS */
@@ -111,5 +110,6 @@ long	time_elapsed(long time, long start);
 void	print_state(long time, t_philosopher *philo, t_state state);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 int		check_death(t_philosopher *philo);
+long	count_think_time(t_philosopher *philo);
 
 #endif

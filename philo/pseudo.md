@@ -53,3 +53,12 @@ for odd:
 	if time_to_eat < time_to_die (odd: eat, even: thinks then die, no sleep)
 	if time_to_eat * 2 < time_to_die (odd: eat and sleep, even: eat, last: die)
 	only survives if time_to_eat > 2 x time_to_die 
+
+// 05.08.25
+
+grepping what time the philosophers eat is a great way to check their meal times
+shoudl also check odd and even numbers
+times where they die on the same dot as they eat
+times where they die while eating
+times where they die while sleeping
+times where they do not die (generously)
