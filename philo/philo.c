@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/04 00:32:38 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 21:43:29 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ void	*ph_solo_philo(void *data)
 	print_state(philo->timer, philo, THINKING);
 	print_state(philo->timer, philo, TAKE_FORK);
 	philo->timer += philo->data->time_to_die;
-	ph_die(philo);
-	return (NULL);
+	return (ph_die(philo));
 }
 
 int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
@@ -62,21 +61,24 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 	while(i < count)
 	{
 		if (count == 1)
+		{
 			if (pthread_create(&(philo[i]->thread), NULL, ph_solo_philo, philo[i]) > 0)
 				return (0);
-		if (i % 2 == 1)
-			if (pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
+		}
+		else if (i % 2 == 1 && pthread_create(&(philo[i]->thread), NULL, ph_eat, philo[i]) > 0)
 				return (0);
-		if (i % 2 == 0 && ph->parity == EVEN && i == count - 1)
+		else if (i % 2 == 0 && ph->parity == ODD && i == count - 1)
+		{
 			if (pthread_create(&(philo[i]->thread), NULL, ph_think, philo[i]) > 0)
 				return (0);
-		if (i % 2 == 0)
+		}
+		else if (i % 2 == 0)
+		{
 			if (pthread_create(&(philo[i]->thread), NULL, ph_first_think, philo[i]) > 0)
 				return (0);
+		}
 		i++;
 	}
-	usleep((useconds_t) LONG_MAX);
-	ph->philo_died = 1;
 	pthread_join(ph->monitoring, NULL);
 	return (1);
 }

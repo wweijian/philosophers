@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/04 00:29:59 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/05 00:12:19 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,9 @@ void *ph_die(void *data)
 
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, DEAD);
+	pthread_mutex_lock(&philo->data->death);
 	philo->data->philo_died = 1;
+	pthread_mutex_unlock(&philo->data->death);
 	return (NULL);
 }
 
@@ -29,7 +31,9 @@ void *ph_sleep(void *data)
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, SLEEPING);
 	if (!update_timer(philo, EATING, philo->data->time_to_eat)) // then what if philo ended? 
-		return (ph_die(philo)); 
+		return (ph_die(philo));
+	if (check_death(philo))
+		return (NULL);
 	ph_think(philo);
 	return (NULL);
 }
@@ -50,8 +54,10 @@ void	*ph_think(void *data)
 
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, THINKING);
-	if (!update_timer(philo, EATING, philo->data->time_to_eat * (philo->data->parity + 1)))
+	if (!update_timer(philo, EATING, philo->data->time_to_eat * (philo->data->parity + 1) - philo->data->time_to_sleep))
 		return (ph_die(philo));
+	if (check_death(philo))
+		return (NULL);
 	ph_eat(philo);
 	return (NULL);
 }
@@ -62,13 +68,15 @@ void	*ph_first_think(void *data)
 
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, THINKING);
-	if (!update_timer(philo, EATING, philo->data->time_to_eat))
+	if (!update_timer(philo, EATING, philo->data->time_to_eat * (philo->data->parity + 1) - philo->data->time_to_sleep))
 		return (ph_die(philo));
+	if (check_death(philo))
+		return (NULL);
 	ph_eat(philo);
 	return (NULL);
 }
 
-/* if philo die exactl y when it eats how? */
+/* if philo die exactly when it eats how? */
 void *ph_eat(void *data)
 {
 	t_philosopher	*philo;
@@ -80,11 +88,13 @@ void *ph_eat(void *data)
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), NULL);
 	print_state(philo->timer, philo, TAKE_FORK);
 	print_state(philo->timer, philo, EATING);
-	philo->times_eaten++; 
+	philo->times_eaten++;
 	if (!update_timer(philo, EATING, philo->data->time_to_eat))
 		return (ph_die(philo)); // need to unlock the mutexes properly 
 	if (pthread_mutex_unlock(&philo->fork.left) > 0 || pthread_mutex_unlock(philo->fork.right) > 0)
 		return (philo->data->philo_ended = 1, error_msg(ERRUNMUT), NULL);
+	if (check_death(philo))
+		return (NULL);
 	ph_sleep(philo);
 	return (NULL);
 }

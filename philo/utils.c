@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/03 23:56:03 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/05 00:11:54 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,35 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	pthread_mutex_lock(&philo->data->print); // if philo die or exit, it should block print
 	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
 		return (pthread_mutex_unlock(&philo->data->print), (void) 0);
-	printf("[%5ld ms] philosopher %d ", time, philo->index);
+	printf("%ld philo %d ", time, philo->index);
 	if (state == WAITING)
-		printf("is WAITING\n");
+		printf("is waiting\n");
 	if (state == EATING)
-		printf("is EATING\n");
+		printf("is eating\n");
 	if (state == SLEEPING)
-		printf("is SLEEPING\n");
+		printf("is sleeping\n");
 	if (state == THINKING)
-		printf("is THINKING\n");
+		printf("is thinking\n");
 	if (state == DEAD)
-		printf("is DEAD ):\n");
+		printf("died\n");
 	if (state == TAKE_FORK)
-		printf("has TAKEN A FORK\n");
+		printf("has taken a fork\n");
 	pthread_mutex_unlock(&philo->data->print);
 }
 
 int	update_timer(t_philosopher *philo, t_state state, long action_time)
 {
-	// TOCHECK: check if will die, need to verify the = too 
-	if (philo->timer + action_time >= philo->last_ate + philo->data->time_to_die)
+	// TOCHECK: check if will die, need to verify the = too
+	if (state == EATING)
+	{
+		if (philo->timer < philo->last_ate + philo->data->time_to_die)
+		{
+			usleep((philo->data->time_to_die + philo->last_ate - philo->timer) * 1000);
+			philo->timer = philo->data->time_to_die + philo->last_ate;
+			return (0);
+		}
+	}
+	else if (philo->timer + action_time >= philo->last_ate + philo->data->time_to_die)
 	{
 		usleep((philo->data->time_to_die + philo->last_ate - philo->timer) * 1000);
 		philo->timer = philo->data->time_to_die + philo->last_ate;
@@ -62,6 +71,18 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 	if (state == EATING)
 		philo->last_ate = philo->timer;
 	return (1);
+}
+
+int	check_death(t_philosopher *philo)
+{
+	int	death;
+
+	death = 0;
+	pthread_mutex_lock(&philo->data->death);
+	if (philo->data->philo_died)
+		death = 1;
+	pthread_mutex_unlock(&philo->data->death);
+	return (death);
 }
 
 /* void	update_time_and_sleep(t_philosopher *philo, t_state state)

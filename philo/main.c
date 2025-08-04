@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/04 00:19:23 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 16:40:01 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	main(int ac, char **av)
 	if (!ph_init_data(ac, av, &data))
 		return (1);
 	if (pthread_mutex_init(&data.print, NULL) > 0)
+		return (0);
+	if (pthread_mutex_init(&data.death, NULL) > 0)
 		return (0);
 	printf(" data.count: %u\n data.time_to_die: %u\n data.time_to_eat: %u\n data.time_to_sleep: %u\n", data.count, data.time_to_die, data.time_to_eat, data.time_to_sleep);
 	if (!init_philosophers(&philo, data.count, &data))

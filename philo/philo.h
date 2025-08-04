@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/04 00:29:26 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/04 19:58:09 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define ERRMEM "malloc failed"
 
 /* DEFINE DELAY */
-# define DELAY 1000000
+# define DELAY 1000
 
 /* ENUM */
 typedef enum s_parity
@@ -68,6 +68,7 @@ typedef struct s_data
 	int						philo_ended;
 	t_parity				parity;
 	pthread_mutex_t			print;
+	pthread_mutex_t			death;
 	pthread_t				monitoring;
 	struct s_philosopher	**ph;
 }	t_data;
@@ -109,5 +110,6 @@ long	time_now(void);
 long	time_elapsed(long time, long start);
 void	print_state(long time, t_philosopher *philo, t_state state);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
+int		check_death(t_philosopher *philo);
 
 #endif
