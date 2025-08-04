@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/05 00:12:19 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/05 00:47:40 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	*ph_think(void *data)
 
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, THINKING);
-	if (!update_timer(philo, EATING, philo->data->time_to_eat * (philo->data->parity + 1) - philo->data->time_to_sleep))
+	if (!update_timer(philo, THINKING, philo->data->time_to_eat * (philo->data->parity + 1) - philo->data->time_to_sleep))
 		return (ph_die(philo));
 	if (check_death(philo))
 		return (NULL);
@@ -68,7 +68,7 @@ void	*ph_first_think(void *data)
 
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, THINKING);
-	if (!update_timer(philo, EATING, philo->data->time_to_eat * (philo->data->parity + 1) - philo->data->time_to_sleep))
+	if (!update_timer(philo, THINKING, philo->data->time_to_eat))
 		return (ph_die(philo));
 	if (check_death(philo))
 		return (NULL);
