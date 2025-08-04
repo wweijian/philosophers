@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/05 04:40:27 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/05 04:57:38 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,7 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 		philo->last_ate = philo->timer;
 	// if (philo->index == 1)
 	// 	printf("philo->timer %ld + action_time %ld > \nphilo->last_ate %u + philo->data->time_to_die %u ", philo->timer, action_time, philo->last_ate,philo->data->time_to_die );
-	if (philo->timer + action_time > philo->last_ate + philo->data->time_to_die 
-		|| (state != THINKING && philo->timer + action_time
-			== philo->last_ate + philo->data->time_to_die))
+	if (philo->timer + action_time > philo->last_ate + philo->data->time_to_die)
 	{
 		usleep((philo->data->time_to_die + philo->last_ate - philo->timer) * 1000);
 		philo->timer = philo->data->time_to_die + philo->last_ate;

@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/05 04:34:36 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/05 05:07:48 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,15 @@ void *ph_sleep(void *data)
 void	*ph_think(void *data)
 {
 	t_philosopher	*philo;
+	long	think_time;
 
 	philo = (t_philosopher *)data;
+	think_time = count_think_time(philo);
+	if (think_time == 0)
+		return (ph_eat(philo));
 	print_state(philo->timer, philo, THINKING);
 	// printf("philo: %d think time: %ld\n",philo->index, count_think_time(philo));
-	if (!update_timer(philo, THINKING, count_think_time(philo)))
+	if (!update_timer(philo, THINKING, think_time))
 		return (ph_die(philo));
 	if (check_death(philo))
 		return (NULL);
