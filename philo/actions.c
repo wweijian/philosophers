@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/05 05:07:48 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:57:56 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void *ph_sleep(void *data)
 
 	philo = (t_philosopher *)data;
 	print_state(philo->timer, philo, SLEEPING);
-	if (!update_timer(philo, SLEEPING, philo->data->time_to_eat)) // then what if philo ended? 
+	if (!update_timer(philo, SLEEPING, philo->data->time_to_sleep)) // then what if philo ended? 
 		return (ph_die(philo));
 	if (check_death(philo))
 		return (NULL);

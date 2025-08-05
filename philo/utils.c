@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/05 04:57:38 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/05 18:57:41 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 	usleep(action_time * 1000);
 	philo->timer += action_time;
 	if (state == EATING)
-		printf("philo->timer %ld\n", philo->timer);
+		printf("[utils.c: update timer] philo->timer %ld\n", philo->timer);
 	return (1);
 }
 
@@ -86,6 +86,8 @@ long	count_think_time(t_philosopher *philo)
 	{
 		if (philo->times_eaten == 0)
 			return (philo->data->time_to_eat);
+		else if (philo->data->time_to_eat <= philo->data->time_to_sleep)
+			return (0);
 		else
 			return (philo->data->time_to_eat - philo->data->time_to_sleep);
 	}
@@ -99,7 +101,7 @@ long	count_think_time(t_philosopher *philo)
 				return(philo->data->time_to_eat);
 		}
 		else
-			return(philo->data->time_to_eat * 2 - philo->data->time_to_eat);
+			return(philo->data->time_to_eat * 2 - philo->data->time_to_sleep);
 	}
 }
 
