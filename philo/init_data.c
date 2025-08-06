@@ -1,46 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   convert.c                                          :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/03 10:48:26 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/06 16:21:31 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-int	ft_isdigit(char c);
-int	ft_atou(const char *nptr, unsigned int *res);
-int	check_digits(char **av);
-int	ft_atoi(const char *nptr, int *res);
-
-int	ph_init_data(int ac, char **av, t_data *ph)
-{
-	ph->philo_died = 0;
-	ph->philo_ended = 0;
-	if (!check_digits(av))
-		return (0);
-	if (!ft_atoi(av[1], &(ph->count)) || ph->count < 1)
-		return (0);
-	ph->parity = ph->count % 2;
-	if (!ft_atou(av[2], &(ph->time_to_die)) || ph->time_to_die < 1)
-		return (0);
-	if (!ft_atou(av[3], &(ph->time_to_eat))|| ph->time_to_eat < 1)
-		return (0);
-	if (!ft_atou(av[4], &(ph->time_to_sleep)) || ph->time_to_sleep < 1)
-		return (0);
-	if (ac == 6)
-	{
-		if (!ft_atou(av[5], &(ph->max_eat)))
-			return (0);
-	}
-	else
-		ph->max_eat = -1;
-	return (1);
-}
 
 int	ft_isdigit(char c)
 {
@@ -88,7 +58,7 @@ int	check_digits(char **av)
 	while (av[i])
 	{
 		j = 0;
-		while(av[i][j])
+		while (av[i][j])
 		{
 			if (!ft_isdigit(av[i][j]))
 				return (0);
@@ -99,3 +69,27 @@ int	check_digits(char **av)
 	return (1);
 }
 
+int	ph_init_data(int ac, char **av, t_data *ph)
+{
+	ph->philo_died = 0;
+	ph->philo_ended = 0;
+	if (!check_digits(av))
+		return (0);
+	if (!ft_atoi(av[1], &(ph->count)) || ph->count < 1)
+		return (0);
+	ph->parity = ph->count % 2;
+	if (!ft_atou(av[2], &(ph->time_to_die)) || ph->time_to_die < 1)
+		return (0);
+	if (!ft_atou(av[3], &(ph->time_to_eat)) || ph->time_to_eat < 1)
+		return (0);
+	if (!ft_atou(av[4], &(ph->time_to_sleep)) || ph->time_to_sleep < 1)
+		return (0);
+	if (ac == 6)
+	{
+		if (!ft_atou(av[5], &(ph->max_eat)))
+			return (0);
+	}
+	else
+		ph->max_eat = -1;
+	return (1);
+}

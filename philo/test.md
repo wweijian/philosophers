@@ -8,7 +8,7 @@ time_to_sleep
 
 min for any time to be 60 
 
-< TEST 1 -- 1 philo>
+TEST 1 -- 1 philo
 
 %./philo 1 x y z a
 
@@ -26,7 +26,7 @@ TEST 2 -- EVEN PHILO
 Even philo should just eat alteratively
 Should they think? I think it's okay either way 
 
-[DIE < EAT (X SLEEP)]
+[DIE < EAT * 2 (SLEEP <= EAT)]
 
 %./philo 1 60 70 z a
 
@@ -38,6 +38,17 @@ of eat on the first guy
 0 philo 1 has taken a fork
 0 philo 1 is eating
 60 philo 0 died
+OPERATION SUCCESS!
+
+./philo 2 100 51 1 3
+0 philo 0 is thinking
+0 philo 1 has taken a fork
+0 philo 1 is eating
+51 philo 1 is sleeping
+51 philo 0 has taken a fork
+51 philo 0 is eating
+52 philo 1 is thinking
+100 philo 1 died
 OPERATION SUCCESS!
 
 [DIE = EAT (X SLEEP)]
@@ -60,4 +71,37 @@ because eat then sleep then eat again
 
 [DIE < EAT + SLEEP]
 
-odd philo dies  
+odd philo dies
+
+0 philo 0 is thinking
+0 philo 1 has taken a fork
+0 philo 1 is eating
+50 philo 1 is sleeping
+50 philo 0 has taken a fork
+50 philo 0 is eating
+60 philo 1 died
+OPERATION SUCCESS!
+
+TEST 3 -- ODD PHILO
+
+[DIE < EAT * 3 (X SLEEP)]
+
+no matter what the sleep value is, someone should die
+if die < eat * 3 
+if philo 1 eat 35, philo 2 eat 35 and philo 0 eat 35, philo 1 waits for 3 people
+
+if die < eat * 2
+if philo 1 eats 51, philo 2 eats 51, philo 0 dies waiting for 2 people. 
+
+[DIE = EAT * 3]
+
+should survive, everybody
+
+[DIE < EAT + SLEEP]
+
+odd philo dies
+
+TEST 3 -- HUGE ODD PHILO
+
+
+

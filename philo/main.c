@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/04 16:40:01 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/06 16:13:28 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,14 @@ int	main(int ac, char **av)
 	data.ph = philo;
 	ph_start_philo(philo, data.count, &data);
 	free_philosophers(philo, data.count);
-	printf("OPERATION SUCCESS!\n");
+	printf("\nSIMULATION COMPLETE\n");
 }
 
 /*	NOTES:
 	 not sure if i accounted for the fact if any of the numbers being 0
 	 and how does that matter? 
+
+	 check memleaks as well as any other allocation failures
+
+	 need to check everything for when philo has ended
 */
