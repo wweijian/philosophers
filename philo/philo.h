@@ -132,6 +132,7 @@ void	add_max_eat(t_philosopher *philo);
 
 /* UTILS */
 void	print_state(long time, t_philosopher *philo, t_state state);
+void	print_dead(long time, t_philosopher *philo);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 long	count_think_time(t_philosopher *philo);
 

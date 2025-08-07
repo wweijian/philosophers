@@ -15,13 +15,19 @@
 void	ph_end(t_philosopher *philo, t_end end)
 {
 	usleep(DELAY);
+	lock(&philo->data->print);
+	if (check_any_death(philo))
+		return (unlock(&philo->data->print), (void) 0);
 	lock(&philo->data->end_check);
 	if (end == DIE)
+	{
+		printf("%ld %d died\n", philo->timer, philo->index);
 		philo->data->philo_died = 1;
-	if (end == END)
+	}
+	else
 		philo->data->philo_died = 1;
 	unlock(&philo->data->end_check);
-	print_state(philo->timer, philo, DEAD);
+	unlock(&philo->data->print);
 }
 
 void	ph_sleep(t_philosopher *philo)

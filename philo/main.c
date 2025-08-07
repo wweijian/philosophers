@@ -12,6 +12,10 @@
 
 #include "philo.h"
 
+/* 
+	Need to flip the fork unlock order 
+*/
+
 int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mutex_t *end_check)
 {
 	if (pthread_mutex_init(start, NULL) > 0)
@@ -51,12 +55,3 @@ int	main(int ac, char **av)
 	printf("\nSIMULATION COMPLETE\n");
 	return (0);
 }
-
-/*	NOTES:
-	 not sure if i accounted for the fact if any of the numbers being 0
-	 and how does that matter? 
-
-	 check memleaks as well as any other allocation failures
-
-	 need to check everything for when philo has ended
-*/

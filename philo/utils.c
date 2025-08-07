@@ -12,14 +12,26 @@
 
 #include "philo.h"
 
-void	print_state(long time, t_philosopher *philo, t_state state)
+static long	last_time(long time, int type)
 {
 	static long	last = 0;
 
+	if (type == 0)
+		return (last);
+	else
+	{
+		last = time;
+		return (last);
+	}
+}
+
+void	print_state(long time, t_philosopher *philo, t_state state)
+{
+
 	lock(&philo->data->print);
-	if (state != DEAD && check_any_death(philo))
+	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
-	if (time < last)
+	if (time < last_time(0, 0))
 		printf("ERROR IN PRINT\n");
 	printf("%ld %d ", time, philo->index);
 	if (state == WAITING)
@@ -30,13 +42,22 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 		printf("is sleeping\n");
 	if (state == THINKING)
 		printf("is thinking\n");
-	if (state == DEAD)
-		printf("died\n");
 	if (state == TAKE_FORK)
 		printf("has taken a fork\n");
-	last = time;
+	last_time(time, 1);
 	unlock(&philo->data->print);
 }
+
+void	print_dead(long time, t_philosopher *philo)
+{
+	lock(&philo->data->print);
+	if (check_any_death(philo))
+		return (unlock(&philo->data->print), (void) 0);
+	printf("%ld %d ", time, philo->index);
+	printf("died\n");
+	unlock(&philo->data->print);
+}
+
 
 long	count_think_time(t_philosopher *philo)
 {
