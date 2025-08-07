@@ -3,40 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 22:17:49 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/08 00:15:52 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	print_scheduler(long time, t_philosopher *philo)
-{
-	unsigned int	i;
-	
-	while (1)
-	{
-		i = 0;
-		while (i < philo->data->count)
-		{
-			if (i != philo->index && i < philo->data->count && (philo->data->ph[i]->expected_print > 0 && time > philo->data->ph[i]->expected_print))
-				break;
-			i++;
-		}
-		if (i == philo->data->count)
-			return ;
-		usleep(DELAY);
-	}
-}
-
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
 	static long	last = 0;
-	
-	philo->expected_print = time;
-	// print_scheduler(time, philo);
+
 	lock(&philo->data->print);
 	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
 		return (unlock(&philo->data->print), (void) 0);

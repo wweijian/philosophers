@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+         #
+#    By: weijian <weijian@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/08/07 21:15:07 by wjhoe            ###   ########.fr        #
+#    Updated: 2025/08/08 00:19:19 by weijian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS_DIR = philo/
 SRCS = main.c \
 		init_data.c init_philo.c \
 		philo.c actions.c \
-		utils.c exit.c mutex.c
+		utils.c exit.c mutex.c time.c
 SRCS := $(addprefix ${SRCS_DIR}, ${SRCS})
 NAME := $(addprefix ${SRCS_DIR}, ${NAME})
 

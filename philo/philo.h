@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 21:21:28 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/08 00:15:34 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,15 @@ typedef struct s_philosopher
 {
 	unsigned int	index;
 	pthread_t		thread;
-	time_t			timer;
 	t_data			*data;
 	unsigned int	times_eaten;
 	unsigned int	last_ate;
 	t_state			state;
 	t_fork			fork;
-	time_t			expected_print;
+	time_t			timer;
 	t_parity		parity;
+	time_t			start_time;
+	time_t			elapsed_time;
 }	t_philosopher;
 
 /* INITIALIZING */
@@ -111,9 +112,11 @@ void	*ph_thread(void *data);
 int lock (pthread_mutex_t *mutex);
 int unlock (pthread_mutex_t *mutex);
 
-/* UTILS */
+/* TIME */
 long	time_now(void);
 long	time_elapsed(long time, long start);
+
+/* UTILS */
 void	print_state(long time, t_philosopher *philo, t_state state);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 int		check_death(t_philosopher *philo);

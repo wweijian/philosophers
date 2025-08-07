@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 21:27:06 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/08 00:18:54 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ph_die(t_philosopher *philo)
 {
-	philo->expected_print = -1;
 	usleep(DELAY);
 	print_state(philo->timer, philo, DEAD);
 	lock(&philo->data->death);
@@ -50,7 +49,7 @@ void	ph_think(t_philosopher *philo)
 void	ph_eat(t_philosopher *philo)
 {
 	if (philo->data->max_eat > 0 && philo->times_eaten == philo->data->max_eat)
-		return (philo->expected_print = -1, (void) 0);
+		return ;
 	if (philo->parity == ODD && (lock(&philo->fork.left) > 0 || lock(philo->fork.right) > 0))
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), (void) 0);
 	if (philo->parity == EVEN && (lock(philo->fork.right) > 0 || lock(&philo->fork.left) > 0))
@@ -77,6 +76,7 @@ void	*ph_thread(void *data)
 	lock(&philo->data->start);
 	unlock(&philo->data->start);
 	usleep(DELAY);
+	philo->start_time = time_now();
 	if (philo->index % 2 == 1)
 		ph_eat(philo);
 	if (philo->index % 2 == 0)
