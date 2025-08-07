@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 14:39:35 by weijian           #+#    #+#             */
-/*   Updated: 2025/07/27 15:08:56 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:39:10 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	free_philosophers(t_philosopher **philo, int count)
 	i = 0;
 	while (i < count)
 	{
-		pthread_mutex_destroy(&philo[i]->fork.left); // mutex destroy frees memory allocated to mutex
+		pthread_mutex_destroy(&philo[i]->fork.left);
 		free(philo[i]);
 		i++;
 	}

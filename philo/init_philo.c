@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:48:55 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/06 16:12:34 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 16:45:08 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	make_philo(t_philosopher **philo, int index, t_data *data)
 	philo[index]->last_ate = 0;
 	philo[index]->state = WAITING;
 	if (pthread_mutex_init(&(philo[index]->fork.left), NULL))
-		return (0);
+		return (free_philosophers(philo, index), free(philo[index]), 0);
 	philo[index]->data = data;
 	return (1);
 }
@@ -38,7 +38,7 @@ int	init_philosophers(t_philosopher ***philo, int count, t_data *data)
 	while (i < count)
 	{
 		if (!make_philo(*philo, i, data))
-			return (0); // need to destroy all the mutexes here
+			return (free(*philo), 0); // need to destroy all the mutexes here
 		i++;
 	}
 	while (i-- > 0)
