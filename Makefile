@@ -19,7 +19,7 @@ SRCS_DIR = philo/
 SRCS = main.c \
 		init_data.c init_philo.c \
 		philo.c actions.c \
-		utils.c exit.c mutex.c time.c
+		utils.c exit.c mutex.c time.c monitoring.c
 
 SRCS := $(addprefix ${SRCS_DIR}, ${SRCS})
 NAME := $(addprefix ${SRCS_DIR}, ${NAME})

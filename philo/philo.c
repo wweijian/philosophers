@@ -13,38 +13,6 @@
 #include "philo.h"
 #include <limits.h>
 
-int	ph_max_eat(t_data *ph)
-{
-	if (ph->max_eat_count == ph->max_eat)
-		return (1);
-	return (0);
-}
-
-void	*ph_monitoring(void *data)
-{
-	t_data			*ph;
-	unsigned int	i;
-
-	i = 0;
-	ph = (t_data *) data;
-	// printf("[philo.c: ph_monitoring] monitoring started\n");
-	while (1)
-	{
-		lock(&ph->end_check);
-		if (ph->philo_died == 1 || ph_max_eat(ph) == 1 || ph->philo_ended == 1)
-			break ;
-		unlock(&ph->end_check);
-	}
-	unlock(&ph->end_check);
-	usleep(1000000);
-	while (i < ph->count)
-	{
-		pthread_join(ph->ph[i]->thread, NULL);
-		i++;
-	}
-	return (NULL);
-}
-
 void	*ph_solo_philo(void *data)
 {
 	t_philosopher	*philo;
@@ -55,7 +23,7 @@ void	*ph_solo_philo(void *data)
 	print_state(philo->timer, philo, THINKING);
 	print_state(philo->timer, philo, TAKE_FORK);
 	philo->timer += philo->data->time_to_die;
-	ph_die(philo);
+	ph_end(philo, DIE);
 	return (NULL);
 }
 

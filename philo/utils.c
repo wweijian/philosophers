@@ -17,7 +17,7 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	static long	last = 0;
 
 	lock(&philo->data->print);
-	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
+	if (check_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
 	if (time < last)
 		printf("ERROR IN PRINT\n");
@@ -54,25 +54,6 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 		usleep(DELAY);
 	philo->timer += action_time;
 	return (1);
-}
-
-int	check_death(t_philosopher *philo)
-{
-	int	death;
-
-	death = 0;
-	lock(&philo->data->end_check);
-	if (philo->data->philo_died)
-		death = 1;
-	unlock(&philo->data->end_check);
-	return (death);
-}
-
-void check_max_eat(t_philosopher *philo)
-{
-	lock(&philo->data->end_check);
-	philo->data->max_eat_count++;
-	unlock(&philo->data->end_check);
 }
 
 long	count_think_time(t_philosopher *philo)

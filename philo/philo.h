@@ -47,6 +47,12 @@ typedef enum s_state
 	DEAD
 }	t_state;
 
+typedef enum s_end
+{
+	DIE,
+	END
+}	t_end;
+
 /* STRUCT */
 
 struct s_philosopher;
@@ -103,7 +109,7 @@ void	error_msg(char *message);
 void	ph_monitoring_thread(t_data *ph);
 int		ph_start_philo(t_philosopher **philo, int count, t_data *ph);
 
-void 	ph_die(t_philosopher *data);
+void 	ph_end(t_philosopher *data, t_end end);
 void	ph_sleep(t_philosopher *data);
 void	ph_eat(t_philosopher *data);
 void	ph_think(t_philosopher *data);
@@ -118,12 +124,15 @@ int destroy (pthread_mutex_t *mutex);
 long	time_now(void);
 long	time_elapsed(long time, long start);
 
+/* MONITORING */
+void	*ph_monitoring(void *data);
+int		check_death(t_philosopher *philo);
+void	add_max_eat(t_philosopher *philo);
+
 /* UTILS */
 void	print_state(long time, t_philosopher *philo, t_state state);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
-int		check_death(t_philosopher *philo);
 long	count_think_time(t_philosopher *philo);
-void	 check_max_eat(t_philosopher *philo);
 
 
 #endif
