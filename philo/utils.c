@@ -17,7 +17,7 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	static long	last = 0;
 
 	lock(&philo->data->print);
-	if (check_death(philo))
+	if (state != DEAD && check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
 	if (time < last)
 		printf("ERROR IN PRINT\n");
@@ -36,24 +36,6 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 		printf("has taken a fork\n");
 	last = time;
 	unlock(&philo->data->print);
-}
-
-int	update_timer(t_philosopher *philo, t_state state, long action_time)
-{
-	if (state == EATING)
-		philo->last_ate = philo->timer;
-	if (philo->timer + action_time > philo->last_ate + philo->data->time_to_die)
-	{
-		usleep((philo->data->time_to_die + philo->last_ate - philo->timer)
-			* 1000);
-		philo->timer = philo->data->time_to_die + philo->last_ate;
-		return (0);
-	}
-	usleep(action_time * 1000);
-	if (philo->data->count > 100)
-		usleep(DELAY);
-	philo->timer += action_time;
-	return (1);
 }
 
 long	count_think_time(t_philosopher *philo)

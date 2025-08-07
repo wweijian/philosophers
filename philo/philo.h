@@ -126,7 +126,8 @@ long	time_elapsed(long time, long start);
 
 /* MONITORING */
 void	*ph_monitoring(void *data);
-int		check_death(t_philosopher *philo);
+int		check_any_death(t_philosopher *philo);
+int		check_individual_death(t_philosopher *philo, t_state state, long action_time);
 void	add_max_eat(t_philosopher *philo);
 
 /* UTILS */

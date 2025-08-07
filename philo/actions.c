@@ -15,21 +15,21 @@
 void	ph_end(t_philosopher *philo, t_end end)
 {
 	usleep(DELAY);
-	print_state(philo->timer, philo, DEAD);
 	lock(&philo->data->end_check);
 	if (end == DIE)
 		philo->data->philo_died = 1;
 	if (end == END)
 		philo->data->philo_died = 1;
 	unlock(&philo->data->end_check);
+	print_state(philo->timer, philo, DEAD);
 }
 
 void	ph_sleep(t_philosopher *philo)
 {
 	print_state(philo->timer, philo, SLEEPING);
-	if (!update_timer(philo, SLEEPING, philo->data->time_to_sleep))
+	if (!check_individual_death(philo, SLEEPING, philo->data->time_to_sleep))
 		return (ph_end(philo, DIE));
-	if (check_death(philo))
+	if (check_any_death(philo))
 		return ;
 	ph_think(philo);
 }
@@ -42,9 +42,9 @@ void	ph_think(t_philosopher *philo)
 	if (think_time == 0)
 		return (ph_eat(philo));
 	print_state(philo->timer, philo, THINKING);
-	if (!update_timer(philo, THINKING, think_time))
+	if (!check_individual_death(philo, THINKING, think_time))
 		return (ph_end(philo, DIE));
-	if (check_death(philo))
+	if (check_any_death(philo))
 		return ;
 	ph_eat(philo);
 }
@@ -60,13 +60,13 @@ void	ph_eat(t_philosopher *philo)
 	print_state(philo->timer, philo, TAKE_FORK);
 	print_state(philo->timer, philo, EATING);
 	philo->times_eaten++;
-	if (!update_timer(philo, EATING, philo->data->time_to_eat))
+	if (!check_individual_death(philo, EATING, philo->data->time_to_eat))
 		return (ph_end(philo, DIE));
 	if (philo->parity == ODD && (unlock(&philo->fork.left) > 0 || unlock(philo->fork.right) > 0))
 		return (ph_end(philo, END), error_msg(ERRUNMUT), (void) 0);
 	if (philo->parity == EVEN && (unlock(philo->fork.right) > 0 || unlock(&philo->fork.left) > 0))
 		return (ph_end(philo, END), error_msg(ERRMUT), (void) 0);
-	if (check_death(philo))
+	if (check_any_death(philo))
 		return ;
 	ph_sleep(philo);
 }

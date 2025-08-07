@@ -34,7 +34,7 @@ void	*ph_monitoring(void *data)
 	return (NULL);
 }
 
-int	check_death(t_philosopher *philo)
+int	check_any_death(t_philosopher *philo)
 {
 	int	death;
 
@@ -44,6 +44,24 @@ int	check_death(t_philosopher *philo)
 		death = 1;
 	unlock(&philo->data->end_check);
 	return (death);
+}
+
+int	check_individual_death(t_philosopher *philo, t_state state, long action_time)
+{
+	if (state == EATING)
+		philo->last_ate = philo->timer;
+	if (philo->timer + action_time > philo->last_ate + philo->data->time_to_die)
+	{
+		usleep((philo->data->time_to_die + philo->last_ate - philo->timer)
+			* 1000);
+		philo->timer = philo->data->time_to_die + philo->last_ate;
+		return (0);
+	}
+	usleep(action_time * 1000);
+	if (philo->data->count > 100)
+		usleep(DELAY);
+	philo->timer += action_time;
+	return (1);
 }
 
 void add_max_eat(t_philosopher *philo)
