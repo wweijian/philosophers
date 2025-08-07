@@ -6,21 +6,42 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 03:05:23 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:21:55 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+void	print_scheduler(long time, t_philosopher *philo)
+{
+	unsigned int	i;
+	
+	while (1)
+	{
+		i = 0;
+		while (i < philo->data->count)
+		{
+			if (i != philo->index && i < philo->data->count && (philo->data->ph[i]->expected_print > 0 && time > philo->data->ph[i]->expected_print))
+				break;
+			i++;
+		}
+		if (i == philo->data->count)
+			return ;
+		usleep(DELAY);
+	}
+}
+
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
 	static long	last = 0;
 	
+	philo->expected_print = time;
+	print_scheduler(time, philo);
 	pthread_mutex_lock(&philo->data->print);
 	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
 		return (pthread_mutex_unlock(&philo->data->print), (void) 0);
 	if (time < last)
-		time = last;
+		printf("ERROR IN PRINT");
 	printf("%ld %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");

@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/05 04:34:30 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:17:44 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ typedef struct s_fork
 
 typedef struct s_data
 {
-	int						count;
+	unsigned int			count;
 	unsigned int			time_to_die;
 	unsigned int			time_to_eat;
 	unsigned int			time_to_sleep;
@@ -83,6 +83,7 @@ typedef struct s_philosopher
 	unsigned int	last_ate;
 	t_state			state;
 	t_fork			fork;
+	time_t			expected_print;
 }	t_philosopher;
 
 /* INITIALIZING */

@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/06 16:15:18 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 15:15:59 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	*ph_die(void *data)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)data;
+	philo->expected_print = -1;
 	usleep(DELAY);
 	print_state(philo->timer, philo, DEAD);
 	pthread_mutex_lock(&philo->data->death);
@@ -74,7 +75,7 @@ void	*ph_eat(void *data)
 
 	philo = (t_philosopher *)data;
 	if (philo->data->max_eat > 0 && philo->times_eaten == philo->data->max_eat)
-		return (NULL);
+		return (philo->expected_print = -1, NULL);
 	if (pthread_mutex_lock(&philo->fork.left) > 0
 		|| pthread_mutex_lock(philo->fork.right) > 0)
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), NULL);
