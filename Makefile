@@ -6,7 +6,7 @@
 #    By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/08/07 19:11:06 by wjhoe            ###   ########.fr        #
+#    Updated: 2025/08/07 21:15:07 by wjhoe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ SRCS_DIR = philo/
 SRCS = main.c \
 		init_data.c init_philo.c \
 		philo.c actions.c \
-		utils.c exit.c
+		utils.c exit.c mutex.c
 SRCS := $(addprefix ${SRCS_DIR}, ${SRCS})
 NAME := $(addprefix ${SRCS_DIR}, ${NAME})
 

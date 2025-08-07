@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 17:37:32 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/07 22:17:49 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	static long	last = 0;
 	
 	philo->expected_print = time;
-	print_scheduler(time, philo);
-	pthread_mutex_lock(&philo->data->print);
+	// print_scheduler(time, philo);
+	lock(&philo->data->print);
 	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
-		return (pthread_mutex_unlock(&philo->data->print), (void) 0);
-	// if (time < last)
-	// 	printf("ERROR IN PRINT");
+		return (unlock(&philo->data->print), (void) 0);
+	if (time < last)
+		printf("ERROR IN PRINT\n");
 	printf("%ld %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");
@@ -56,7 +56,7 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	if (state == TAKE_FORK)
 		printf("has taken a fork\n");
 	last = time;
-	pthread_mutex_unlock(&philo->data->print);
+	unlock(&philo->data->print);
 }
 
 int	update_timer(t_philosopher *philo, t_state state, long action_time)
@@ -82,10 +82,10 @@ int	check_death(t_philosopher *philo)
 	int	death;
 
 	death = 0;
-	pthread_mutex_lock(&philo->data->death);
+	lock(&philo->data->death);
 	if (philo->data->philo_died)
 		death = 1;
-	pthread_mutex_unlock(&philo->data->death);
+	unlock(&philo->data->death);
 	return (death);
 }
 

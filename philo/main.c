@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 17:39:56 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/07 20:59:17 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	main(int ac, char **av)
 		return (1);
 	if (pthread_mutex_init(&data.death, NULL) > 0)
 		return (pthread_mutex_destroy(&data.print), 0);
+	if (pthread_mutex_init(&data.start, NULL) > 0)
+		return (pthread_mutex_destroy(&data.print), pthread_mutex_destroy(&data.death), 0);
 	if (!init_philosophers(&philo, data.count, &data))
 		return (1);
 	data.ph = philo;

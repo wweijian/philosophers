@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 15:17:44 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 21:21:28 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct s_data
 	t_parity				parity;
 	pthread_mutex_t			print;
 	pthread_mutex_t			death;
+	pthread_mutex_t			start;
 	pthread_t				monitoring;
 	struct s_philosopher	**ph;
 }	t_data;
@@ -84,6 +85,7 @@ typedef struct s_philosopher
 	t_state			state;
 	t_fork			fork;
 	time_t			expected_print;
+	t_parity		parity;
 }	t_philosopher;
 
 /* INITIALIZING */
@@ -99,11 +101,15 @@ void	error_msg(char *message);
 void	ph_monitoring_thread(t_data *ph);
 int		ph_start_philo(t_philosopher **philo, int count, t_data *ph);
 
-void 	*ph_die(void *data);
-void	*ph_sleep(void *data);
-void	*ph_eat(void *data);
-void	*ph_think(void *data);
+void 	ph_die(t_philosopher *data);
+void	ph_sleep(t_philosopher *data);
+void	ph_eat(t_philosopher *data);
+void	ph_think(t_philosopher *data);
+void	*ph_thread(void *data);
 
+/* MUTEX */
+int lock (pthread_mutex_t *mutex);
+int unlock (pthread_mutex_t *mutex);
 
 /* UTILS */
 long	time_now(void);
