@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 16:47:06 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:39:56 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(int ac, char **av)
 	if (!ph_init_data(ac, av, &data))
 		return (1);
 	if (pthread_mutex_init(&data.print, NULL) > 0)
-		return (0);
+		return (1);
 	if (pthread_mutex_init(&data.death, NULL) > 0)
 		return (pthread_mutex_destroy(&data.print), 0);
 	if (!init_philosophers(&philo, data.count, &data))
@@ -32,6 +32,7 @@ int	main(int ac, char **av)
 	data.ph = philo;
 	ph_start_philo(philo, data.count, &data);
 	free_philosophers(philo, data.count);
+	free(philo);
 	pthread_mutex_destroy(&data.death);
 	pthread_mutex_destroy(&data.print);
 	printf("\nSIMULATION COMPLETE\n");

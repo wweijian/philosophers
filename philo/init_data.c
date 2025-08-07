@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/06 16:21:31 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:38:39 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	ft_atou(const char *nptr, unsigned int *res)
 	return (1);
 }
 
-int	ft_atoi(const char *nptr, int *res)
+int	ft_atoi(const char *nptr, unsigned int *res)
 {
 	int	i;
 
@@ -86,7 +86,7 @@ int	ph_init_data(int ac, char **av, t_data *ph)
 		return (0);
 	if (ac == 6)
 	{
-		if (!ft_atou(av[5], &(ph->max_eat)))
+		if (!ft_atou(av[5], &(ph->max_eat)) || ph->max_eat < 1)
 			return (0);
 	}
 	else

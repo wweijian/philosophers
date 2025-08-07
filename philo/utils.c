@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 15:21:55 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:37:32 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ void	print_state(long time, t_philosopher *philo, t_state state)
 	pthread_mutex_lock(&philo->data->print);
 	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
 		return (pthread_mutex_unlock(&philo->data->print), (void) 0);
-	if (time < last)
-		printf("ERROR IN PRINT");
+	// if (time < last)
+	// 	printf("ERROR IN PRINT");
 	printf("%ld %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");

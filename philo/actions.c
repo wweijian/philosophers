@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 15:15:59 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 17:37:07 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,17 +39,6 @@ void	*ph_sleep(void *data)
 	ph_think(philo);
 	return (NULL);
 }
-
-/* 
-	i should make some chanes to the time for ph_think 
-	to account for the following facts: 
-		first think should really just be 1 meal time -- after the first eat,
-		the thikning philo can just reach for the fork already
-	the second think should be waiting for 2 eats ... right??
-		yes, cos need to wait for 2 people to eat
-		but, should i pick up a fork first? because technically i can
-		i dont' have to 
-*/
 
 void	*ph_think(void *data)
 {

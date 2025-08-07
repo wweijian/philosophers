@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/07 15:22:13 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 19:32:55 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,20 @@ int	ph_max_eat(t_data *data)
 
 void	*ph_monitoring(void *data)
 {
-	t_data	*ph;
+	t_data			*ph;
+	unsigned int	i;
 
+	i = 0;
 	ph = (t_data *) data;
 	// printf("[philo.c: ph_monitoring] monitoring started\n");
 	while (ph->philo_died == 0 && ph_max_eat(ph) == 0 && ph->philo_ended == 0)
 		;
 	usleep(1000000);
+	while (i < ph->count)
+	{
+		pthread_join(ph->ph[i]->thread, NULL);
+		i++;
+	}
 	return (NULL);
 }
 
@@ -58,7 +65,6 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 
 	i = 0;
 	pthread_create(&ph->monitoring, NULL, ph_monitoring, ph);
-	usleep(1000000);
 	while (i < count)
 	{
 		if (count == 1)
