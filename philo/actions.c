@@ -16,9 +16,9 @@ void	ph_die(t_philosopher *philo)
 {
 	usleep(DELAY);
 	print_state(philo->timer, philo, DEAD);
-	lock(&philo->data->death);
+	lock(&philo->data->end_check);
 	philo->data->philo_died = 1;
-	unlock(&philo->data->death);
+	unlock(&philo->data->end_check);
 }
 
 void	ph_sleep(t_philosopher *philo)
@@ -49,7 +49,7 @@ void	ph_think(t_philosopher *philo)
 void	ph_eat(t_philosopher *philo)
 {
 	if (philo->data->max_eat > 0 && philo->times_eaten == philo->data->max_eat)
-		return ;
+		return check_max_eat(philo);
 	if (philo->parity == ODD && (lock(&philo->fork.left) > 0 || lock(philo->fork.right) > 0))
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), (void) 0);
 	if (philo->parity == EVEN && (lock(philo->fork.right) > 0 || lock(&philo->fork.left) > 0))

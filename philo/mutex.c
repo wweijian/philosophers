@@ -21,3 +21,8 @@ int unlock (pthread_mutex_t *mutex)
 {
 	return (pthread_mutex_unlock(mutex));
 }
+
+int destroy (pthread_mutex_t *mutex)
+{
+	return (pthread_mutex_destroy(mutex));
+}

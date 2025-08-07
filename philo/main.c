@@ -12,6 +12,24 @@
 
 #include "philo.h"
 
+int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mutex_t *end_check)
+{
+	if (pthread_mutex_init(start, NULL) > 0)
+		return (0);
+	if (pthread_mutex_init(print, NULL) > 0)
+		return (destroy(start), 0);
+	if (pthread_mutex_init(end_check, NULL) > 0)
+		return (destroy(start), destroy(print), 0);
+	return (1);
+}
+
+void	destroy_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mutex_t *end_check)
+{
+	destroy(end_check);
+	destroy(print);
+	destroy(start);
+}
+
 int	main(int ac, char **av)
 {
 	t_data			data;
@@ -23,20 +41,13 @@ int	main(int ac, char **av)
 		return (1);
 	if (!ph_init_data(ac, av, &data))
 		return (1);
-	if (pthread_mutex_init(&data.print, NULL) > 0)
-		return (1);
-	if (pthread_mutex_init(&data.death, NULL) > 0)
-		return (pthread_mutex_destroy(&data.print), 0);
-	if (pthread_mutex_init(&data.start, NULL) > 0)
-		return (pthread_mutex_destroy(&data.print), pthread_mutex_destroy(&data.death), 0);
+	init_data_mutexes(&data.start, &data.print, &data.end_check);
 	if (!init_philosophers(&philo, data.count, &data))
 		return (1);
 	data.ph = philo;
 	ph_start_philo(philo, data.count, &data);
 	free_philosophers(philo, data.count);
 	free(philo);
-	pthread_mutex_destroy(&data.death);
-	pthread_mutex_destroy(&data.print);
 	printf("\nSIMULATION COMPLETE\n");
 	return (0);
 }

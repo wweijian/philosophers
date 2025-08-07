@@ -73,6 +73,7 @@ int	ph_init_data(int ac, char **av, t_data *ph)
 {
 	ph->philo_died = 0;
 	ph->philo_ended = 0;
+	ph->max_eat = 0;
 	if (!check_digits(av))
 		return (0);
 	if (!ft_atoi(av[1], &(ph->count)) || ph->count < 1)

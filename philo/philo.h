@@ -64,11 +64,12 @@ typedef struct s_data
 	unsigned int			time_to_eat;
 	unsigned int			time_to_sleep;
 	unsigned int			max_eat;
+	unsigned int			max_eat_count;
 	long					philo_died;
 	int						philo_ended;
 	t_parity				parity;
 	pthread_mutex_t			print;
-	pthread_mutex_t			death;
+	pthread_mutex_t			end_check;
 	pthread_mutex_t			start;
 	pthread_t				monitoring;
 	struct s_philosopher	**ph;
@@ -111,6 +112,7 @@ void	*ph_thread(void *data);
 /* MUTEX */
 int lock (pthread_mutex_t *mutex);
 int unlock (pthread_mutex_t *mutex);
+int destroy (pthread_mutex_t *mutex);
 
 /* TIME */
 long	time_now(void);
@@ -121,5 +123,7 @@ void	print_state(long time, t_philosopher *philo, t_state state);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 int		check_death(t_philosopher *philo);
 long	count_think_time(t_philosopher *philo);
+void	 check_max_eat(t_philosopher *philo);
+
 
 #endif

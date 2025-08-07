@@ -13,18 +13,11 @@
 #include "philo.h"
 #include <limits.h>
 
-int	ph_max_eat(t_data *data)
+int	ph_max_eat(t_data *ph)
 {
-	unsigned int	i;
-
-	i = 0;
-	while (i < data->count)
-	{
-		if (data->ph[i]->times_eaten != data->max_eat)
-			return (0);
-		i++;
-	}
-	return (1);
+	if (ph->max_eat_count == ph->max_eat)
+		return (1);
+	return (0);
 }
 
 void	*ph_monitoring(void *data)
@@ -35,8 +28,14 @@ void	*ph_monitoring(void *data)
 	i = 0;
 	ph = (t_data *) data;
 	// printf("[philo.c: ph_monitoring] monitoring started\n");
-	while (ph->philo_died == 0 && ph_max_eat(ph) == 0 && ph->philo_ended == 0)
-		;
+	while (1)
+	{
+		lock(&ph->end_check);
+		if (ph->philo_died == 1 || ph_max_eat(ph) == 1 || ph->philo_ended == 1)
+			break ;
+		unlock(&ph->end_check);
+	}
+	unlock(&ph->end_check);
 	usleep(1000000);
 	while (i < ph->count)
 	{
