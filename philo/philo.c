@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/06 16:19:02 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:10:58 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	*ph_monitoring(void *data)
 	t_data	*ph;
 
 	ph = (t_data *) data;
-	printf("[philo.c: ph_monitoring] monitoring started\n");
+	// printf("[philo.c: ph_monitoring] monitoring started\n");
 	while (ph->philo_died == 0 && ph_max_eat(ph) == 0 && ph->philo_ended == 0)
 		;
 	usleep(1000000);

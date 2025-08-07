@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/06 16:21:01 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/07 03:05:23 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,12 @@
 void	print_state(long time, t_philosopher *philo, t_state state)
 {
 	static long	last = 0;
-
-	while (time < last)
-		usleep(DELAY);
+	
 	pthread_mutex_lock(&philo->data->print);
-	if (time < last)
-		printf("philo: %d error in time print\n", philo->index);
 	if (philo->data->philo_died == 1 || philo->data->philo_ended == 1)
 		return (pthread_mutex_unlock(&philo->data->print), (void) 0);
+	if (time < last)
+		time = last;
 	printf("%ld %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");
@@ -52,6 +50,8 @@ int	update_timer(t_philosopher *philo, t_state state, long action_time)
 		return (0);
 	}
 	usleep(action_time * 1000);
+	if (philo->data->count > 100)
+		usleep(DELAY);
 	philo->timer += action_time;
 	return (1);
 }
