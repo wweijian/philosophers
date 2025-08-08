@@ -12,6 +12,11 @@
 
 #include "philo.h"
 
+/* 
+		problem with getting the timing early is that i can still get desync-ed
+		timing
+*/
+
 void	ph_end(t_philosopher *philo, t_end end)
 {
 	usleep(DELAY);
@@ -32,7 +37,7 @@ void	ph_end(t_philosopher *philo, t_end end)
 
 void	ph_sleep(t_philosopher *philo)
 {
-	print_state(philo->timer, philo, SLEEPING);
+	print_state(philo, SLEEPING, philo->data->time_to_sleep);
 	if (!check_individual_death(philo, SLEEPING, philo->data->time_to_sleep))
 		return (ph_end(philo, DIE));
 	if (check_any_death(philo))
@@ -47,7 +52,7 @@ void	ph_think(t_philosopher *philo)
 	think_time = count_think_time(philo);
 	if (think_time == 0)
 		return (ph_eat(philo));
-	print_state(philo->timer, philo, THINKING);
+	print_state(philo, THINKING, think_time);
 	if (!check_individual_death(philo, THINKING, think_time))
 		return (ph_end(philo, DIE));
 	if (check_any_death(philo))
@@ -63,8 +68,8 @@ void	ph_eat(t_philosopher *philo)
 		return (ph_end(philo, END), error_msg(ERRMUT), (void) 0);
 	if (philo->parity == EVEN && (lock(philo->fork.right) > 0 || lock(&philo->fork.left) > 0))
 		return (ph_end(philo, END), error_msg(ERRMUT), (void) 0);
-	print_state(philo->timer, philo, TAKE_FORK);
-	print_state(philo->timer, philo, EATING);
+	print_state(philo, TAKE_FORK, 0);
+	print_state(philo, EATING, philo->data->time_to_eat);
 	philo->times_eaten++;
 	if (!check_individual_death(philo, EATING, philo->data->time_to_eat))
 		return (ph_end(philo, DIE));
@@ -85,7 +90,6 @@ void	*ph_thread(void *data)
 	lock(&philo->data->start);
 	unlock(&philo->data->start);
 	usleep(DELAY);
-	philo->start_time = time_now();
 	if (philo->index % 2 == 1)
 		ph_eat(philo);
 	if (philo->index % 2 == 0)

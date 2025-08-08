@@ -122,7 +122,7 @@ int destroy (pthread_mutex_t *mutex);
 
 /* TIME */
 long	time_now(void);
-long	time_elapsed(long time, long start);
+long	time_elapsed(t_philosopher *philo);
 
 /* MONITORING */
 void	*ph_monitoring(void *data);
@@ -131,7 +131,7 @@ int		check_individual_death(t_philosopher *philo, t_state state, long action_tim
 void	add_max_eat(t_philosopher *philo);
 
 /* UTILS */
-void	print_state(long time, t_philosopher *philo, t_state state);
+void	print_state(t_philosopher *philo, t_state state, long action_time);
 void	print_dead(long time, t_philosopher *philo);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 long	count_think_time(t_philosopher *philo);

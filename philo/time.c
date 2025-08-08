@@ -20,9 +20,7 @@ long	time_now(void)
 	return ((long) time.tv_sec * 1000 + (long) time.tv_usec / 1000);
 }
 
-long	time_elapsed(long time, long start)
+long	time_elapsed(t_philosopher *philo)
 {
-	if (!time)
-		return (time_now() - start);
-	return (time - start);
+	return (time_now() - philo->start_time);
 }

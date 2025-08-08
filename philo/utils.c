@@ -25,15 +25,18 @@ static long	last_time(long time, int type)
 	}
 }
 
-void	print_state(long time, t_philosopher *philo, t_state state)
+void	print_state(t_philosopher *philo, t_state state, long action_time)
 {
+	long	time;
+	(void) action_time;
 
 	lock(&philo->data->print);
 	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
-	if (time < last_time(0, 0))
-		printf("ERROR IN PRINT\n");
-	printf("%ld %d ", time, philo->index);
+	time = time_elapsed(philo);
+	// if (time < last_time(0, 0))
+	// 	printf("ERROR IN PRINT\n");
+	printf("%ld philo %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");
 	if (state == EATING)
@@ -57,7 +60,6 @@ void	print_dead(long time, t_philosopher *philo)
 	printf("died\n");
 	unlock(&philo->data->print);
 }
-
 
 long	count_think_time(t_philosopher *philo)
 {

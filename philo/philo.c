@@ -20,8 +20,8 @@ void	*ph_solo_philo(void *data)
 	philo = (t_philosopher *)data;
 	if (pthread_mutex_lock(&philo->fork.left) > 0)
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), NULL);
-	print_state(philo->timer, philo, THINKING);
-	print_state(philo->timer, philo, TAKE_FORK);
+	print_state(philo, THINKING, 0);
+	print_state(philo, TAKE_FORK, philo->data->time_to_eat);
 	philo->timer += philo->data->time_to_die;
 	ph_end(philo, DIE);
 	return (NULL);
@@ -49,6 +49,8 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 		i++;
 	}
 	// printf("[philo.c: ph_start_philo] threads created\n");
+	while (i-- > 0)
+		philo[i]->start_time = time_now();
 	pthread_mutex_unlock(&ph->start);
 	pthread_join(ph->monitoring, NULL);
 	return (1);
