@@ -33,9 +33,12 @@ void	print_state(t_philosopher *philo, t_state state, long action_time)
 	lock(&philo->data->print);
 	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
+	add_delay(philo);
 	time = time_elapsed(philo);
+	philo->last_print = time;
 	// if (time < last_time(0, 0))
 	// 	printf("ERROR IN PRINT\n");
+	last_time(time, 1);
 	printf("%ld philo %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");
@@ -47,7 +50,7 @@ void	print_state(t_philosopher *philo, t_state state, long action_time)
 		printf("is thinking\n");
 	if (state == TAKE_FORK)
 		printf("has taken a fork\n");
-	last_time(time, 1);
+	// printf("  philo->timer: %ld\n", philo->timer);
 	unlock(&philo->data->print);
 }
 

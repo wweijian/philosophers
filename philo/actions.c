@@ -13,8 +13,10 @@
 #include "philo.h"
 
 /* 
-		problem with getting the timing early is that i can still get desync-ed
-		timing
+		actions:
+		print
+		check time (die or no die)
+		sleep and increment time
 */
 
 void	ph_end(t_philosopher *philo, t_end end)

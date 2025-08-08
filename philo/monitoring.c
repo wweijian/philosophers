@@ -58,9 +58,15 @@ int	check_individual_death(t_philosopher *philo, t_state state, long action_time
 		return (0);
 	}
 	usleep(action_time * 1000);
-	if (philo->data->count > 100)
-		usleep(DELAY);
+	// if (philo->timer < philo->last_print)
+	// {
+	// 	// puts("monitoring.c : check_individual_death");
+	// 	lock(&philo->data->start);
+	// 	philo->data->start_time++;
+	// 	unlock(&philo->data->start);
+	// }
 	philo->timer += action_time;
+	// fprintf(stdout, "[monitoring.c : check_individual_death] philo[%d]->timer: %ld  philo->last_print: %ld\n", philo->index, philo->timer, philo->last_print);
 	return (1);
 }
 

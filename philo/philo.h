@@ -74,6 +74,7 @@ typedef struct s_data
 	long					philo_died;
 	int						philo_ended;
 	t_parity				parity;
+	time_t					start_time;
 	pthread_mutex_t			print;
 	pthread_mutex_t			end_check;
 	pthread_mutex_t			start;
@@ -84,16 +85,16 @@ typedef struct s_data
 typedef struct s_philosopher
 {
 	unsigned int	index;
+	t_parity		parity;
 	pthread_t		thread;
-	t_data			*data;
 	unsigned int	times_eaten;
 	unsigned int	last_ate;
 	t_state			state;
 	t_fork			fork;
 	time_t			timer;
-	t_parity		parity;
-	time_t			start_time;
 	time_t			elapsed_time;
+	time_t			last_print;
+	t_data			*data;
 }	t_philosopher;
 
 /* INITIALIZING */
@@ -123,6 +124,7 @@ int destroy (pthread_mutex_t *mutex);
 /* TIME */
 long	time_now(void);
 long	time_elapsed(t_philosopher *philo);
+void	add_delay(t_philosopher *philo);
 
 /* MONITORING */
 void	*ph_monitoring(void *data);

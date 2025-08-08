@@ -22,5 +22,22 @@ long	time_now(void)
 
 long	time_elapsed(t_philosopher *philo)
 {
-	return (time_now() - philo->start_time);
+	long	res;
+	lock(&philo->data->start);
+	res = time_now() - philo->data->start_time;
+	unlock(&philo->data->start);
+	return (res);
+}
+
+void	add_delay(t_philosopher *philo)
+{
+	static	int i = 0;;
+
+	if (philo->data->count < 2)
+		return ;
+	i++;
+	lock(&philo->data->start);
+	if (i % (philo->data->count * 3) == 0)
+		philo->data->start_time += 2;
+	unlock(&philo->data->start);
 }

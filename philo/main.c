@@ -14,6 +14,8 @@
 
 /* 
 	Need to flip the fork unlock order 
+
+	whenever philo exits eat, needs to release forks
 */
 
 int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mutex_t *end_check)

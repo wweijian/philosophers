@@ -18,6 +18,9 @@ void	*ph_solo_philo(void *data)
 	t_philosopher	*philo;
 
 	philo = (t_philosopher *)data;
+	pthread_mutex_lock(&philo->data->start);
+	philo->data->start_time = time_now();
+	pthread_mutex_unlock(&philo->data->start);
 	if (pthread_mutex_lock(&philo->fork.left) > 0)
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), NULL);
 	print_state(philo, THINKING, 0);
@@ -49,8 +52,7 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 		i++;
 	}
 	// printf("[philo.c: ph_start_philo] threads created\n");
-	while (i-- > 0)
-		philo[i]->start_time = time_now();
+	ph->start_time = time_now();
 	pthread_mutex_unlock(&ph->start);
 	pthread_join(ph->monitoring, NULL);
 	return (1);
