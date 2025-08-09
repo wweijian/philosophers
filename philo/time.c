@@ -38,6 +38,9 @@ void	add_delay(t_philosopher *philo)
 	i++;
 	lock(&philo->data->start);
 	if (i % (philo->data->count * 3) == 0)
+	{
 		philo->data->start_time += 2;
+		i = 0;
+	}
 	unlock(&philo->data->start);
 }
