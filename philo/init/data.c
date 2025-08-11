@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 10:05:48 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/11 10:07:51 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/11 13:42:23 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,7 @@ int	ft_isdigit(char c)
 	return ((c >= '0' && c <= '9'));
 }
 
-int	ft_atou(const char *nptr, unsigned int *res)
-{
-	int	i;
-
-	i = 0;
-	*res = 0;
-	while (nptr[i] >= '0' && nptr[i] <= '9')
-	{
-		if (*res > UINT_MAX / 10 && (nptr[i] - '0') <= ((char) UINT_MAX % 10))
-			return (0);
-		*res = (nptr[i] - '0') + (*res * 10);
-		i++;
-	}
-	return (1);
-}
-
-int	ft_atoi(const char *nptr, unsigned int *res)
+int	ft_atoi(const char *nptr, int *res)
 {
 	int	i;
 
@@ -78,15 +62,15 @@ int	ph_init_data(int ac, char **av, t_data *ph)
 	if (!ft_atoi(av[1], &(ph->count)) || ph->count < 1)
 		return (0);
 	ph->parity = ph->count % 2;
-	if (!ft_atou(av[2], &(ph->time_to_die)) || ph->time_to_die < 1)
+	if (!ft_atoi(av[2], &(ph->time_to_die)))
 		return (0);
-	if (!ft_atou(av[3], &(ph->time_to_eat)) || ph->time_to_eat < 1)
+	if (!ft_atoi(av[3], &(ph->time_to_eat)))
 		return (0);
-	if (!ft_atou(av[4], &(ph->time_to_sleep)) || ph->time_to_sleep < 1)
+	if (!ft_atoi(av[4], &(ph->time_to_sleep)))
 		return (0);
 	if (ac == 6)
 	{
-		if (!ft_atou(av[5], &(ph->max_eat)) || ph->max_eat < 1)
+		if (!ft_atoi(av[5], &(ph->max_eat)))
 			return (0);
 	}
 	else
