@@ -1,28 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   time.c                                             :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/08 00:11:39 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/08 00:13:01 by weijian          ###   ########.fr       */
+/*   Created: 2025/08/11 09:16:02 by weijian           #+#    #+#             */
+/*   Updated: 2025/08/11 10:32:10 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-long	time_now(void)
+int main (int ac, char **av)
 {
-	struct timeval	time;
-	
-	gettimeofday(&time, NULL);
-	return ((long) time.tv_sec * 1000 + (long) time.tv_usec / 1000);
-}
+	t_data			data;
+	t_philosopher	**philo;
 
-long	time_elapsed(long time, long start)
-{
-	if (!time)
-		return (time_now() - start);
-	return (time - start);
+	if (ac != 5 && ac != 6)
+		return (1);
+	if (!ph_init_data(ac, av, &data) || )
+		return (1);
+	
 }

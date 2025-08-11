@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data.c                                        :+:      :+:    :+:   */
+/*   data.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 17:38:39 by wjhoe            ###   ########.fr       */
+/*   Created: 2025/08/11 10:05:48 by weijian           #+#    #+#             */
+/*   Updated: 2025/08/11 10:07:51 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,7 @@ int	check_digits(char **av)
 
 int	ph_init_data(int ac, char **av, t_data *ph)
 {
-	ph->philo_died = 0;
-	ph->philo_ended = 0;
+	ph->sim_end = 0;
 	ph->max_eat = 0;
 	if (!check_digits(av))
 		return (0);

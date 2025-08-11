@@ -5,15 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/08 00:15:34 by weijian          ###   ########.fr       */
+/*   Created: 2025/08/11 09:17:28 by weijian           #+#    #+#             */
+/*   Updated: 2025/08/11 10:23:17 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-// SYS LIBS
+/* --- LIBRARIES --- */
+
 # include <stdio.h>
 # include <string.h>
 # include <stdlib.h>
@@ -22,7 +23,7 @@
 # include <pthread.h>
 # include <limits.h>
 
-/* ERROR MESSAGES */
+/* --- ERROR MESSAGES --- */
 # define ERRMUT "mutex failed to be locked"
 # define ERRUNMUT "mutex failed to be unlocked"
 # define ERRMEM "malloc failed"
@@ -30,7 +31,7 @@
 /* DEFINE DELAY */
 # define DELAY 1000
 
-/* ENUM */
+/* --- ENUM --- */
 typedef enum s_parity
 {
 	EVEN,
@@ -53,7 +54,7 @@ typedef enum s_end
 	END
 }	t_end;
 
-/* STRUCT */
+/* --- DATA STRUCTURES --- */
 
 struct s_philosopher;
 
@@ -71,68 +72,19 @@ typedef struct s_data
 	unsigned int			time_to_sleep;
 	unsigned int			max_eat;
 	unsigned int			max_eat_count;
-	long					philo_died;
-	int						philo_ended;
+	unsigned int			sim_end;
 	t_parity				parity;
-	pthread_mutex_t			print;
-	pthread_mutex_t			end_check;
-	pthread_mutex_t			start;
-	pthread_t				monitoring;
-	struct s_philosopher	**ph;
+	struct s_philosopher	**philo;
 }	t_data;
 
 typedef struct s_philosopher
 {
-	unsigned int	index;
-	pthread_t		thread;
-	t_data			*data;
-	unsigned int	times_eaten;
-	unsigned int	last_ate;
-	t_state			state;
-	t_fork			fork;
-	time_t			timer;
-	t_parity		parity;
-	time_t			start_time;
-	time_t			elapsed_time;
+	t_data	*				data;
 }	t_philosopher;
 
-/* INITIALIZING */
-int		ph_init_data(int ac, char **av, t_data *ph_data);
-int		init_philosophers(t_philosopher ***philo, int count, t_data *data);
-void	init_data(t_data *ph);
+/* --- PROTOTYPES --- */
 
-/* CLEAN UP */
-void	free_philosophers(t_philosopher **philo, int count);
-void	error_msg(char *message);
-
-/* SIMULATION */
-void	ph_monitoring_thread(t_data *ph);
-int		ph_start_philo(t_philosopher **philo, int count, t_data *ph);
-
-void 	ph_end(t_philosopher *data, t_end end);
-void	ph_sleep(t_philosopher *data);
-void	ph_eat(t_philosopher *data);
-void	ph_think(t_philosopher *data);
-void	*ph_thread(void *data);
-
-/* MUTEX */
-int lock (pthread_mutex_t *mutex);
-int unlock (pthread_mutex_t *mutex);
-int destroy (pthread_mutex_t *mutex);
-
-/* TIME */
-long	time_now(void);
-long	time_elapsed(long time, long start);
-
-/* MONITORING */
-void	*ph_monitoring(void *data);
-int		check_death(t_philosopher *philo);
-void	add_max_eat(t_philosopher *philo);
-
-/* UTILS */
-void	print_state(long time, t_philosopher *philo, t_state state);
-int		update_timer(t_philosopher *philo, t_state state, long action_time);
-long	count_think_time(t_philosopher *philo);
-
+/* --- INITIALIZATION --- */
+int	ph_init_data(int ac, char **av, t_data *ph);
 
 #endif
