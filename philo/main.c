@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 20:59:17 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 23:17:09 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 	whenever philo exits eat, needs to release forks
 */
 
-int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mutex_t *end_check)
+int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print,
+						pthread_mutex_t *end_check)
 {
 	if (pthread_mutex_init(start, NULL) > 0)
 		return (0);
@@ -29,7 +30,8 @@ int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mu
 	return (1);
 }
 
-void	destroy_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print, pthread_mutex_t *end_check)
+void	destroy_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print,
+								pthread_mutex_t *end_check)
 {
 	destroy(end_check);
 	destroy(print);

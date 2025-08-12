@@ -1,11 +1,24 @@
-
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   monitoring.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/12 22:39:00 by weijian           #+#    #+#             */
+/*   Updated: 2025/08/12 23:22:29 by weijian          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "philo.h"
 
 int	ph_max_eat(t_data *ph)
 {
-	if (ph->max_eat_count == ph->max_eat)
+	if (ph->max_eat_count == ph->count)
+	{
+		unlock(&ph->end_check);
 		return (1);
+	}
 	return (0);
 }
 
@@ -16,7 +29,6 @@ void	*ph_monitoring(void *data)
 
 	i = 0;
 	ph = (t_data *) data;
-	// printf("[philo.c: ph_monitoring] monitoring started\n");
 	while (1)
 	{
 		lock(&ph->end_check);
@@ -46,7 +58,8 @@ int	check_any_death(t_philosopher *philo)
 	return (death);
 }
 
-int	check_individual_death(t_philosopher *philo, t_state state, long action_time)
+int	check_individual_death(t_philosopher *philo, t_state state,
+							long action_time)
 {
 	if (state == EATING)
 		philo->last_ate = philo->timer;
@@ -58,19 +71,11 @@ int	check_individual_death(t_philosopher *philo, t_state state, long action_time
 		return (0);
 	}
 	usleep(action_time * 1000);
-	// if (philo->timer < philo->last_print)
-	// {
-	// 	// puts("monitoring.c : check_individual_death");
-	// 	lock(&philo->data->start);
-	// 	philo->data->start_time++;
-	// 	unlock(&philo->data->start);
-	// }
 	philo->timer += action_time;
-	// fprintf(stdout, "[monitoring.c : check_individual_death] philo[%d]->timer: %ld  philo->last_print: %ld\n", philo->index, philo->timer, philo->last_print);
 	return (1);
 }
 
-void add_max_eat(t_philosopher *philo)
+void	add_max_eat(t_philosopher *philo)
 {
 	lock(&philo->data->end_check);
 	philo->data->max_eat_count++;

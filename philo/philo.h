@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/08 00:15:34 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/12 23:27:44 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ typedef enum s_end
 
 /* STRUCT */
 
-struct s_philosopher;
+struct	s_philosopher;
 
 typedef struct s_fork
 {
 	pthread_mutex_t	left;
-	pthread_mutex_t *right;
+	pthread_mutex_t	*right;
 }	t_fork;
 
 typedef struct s_data
@@ -110,16 +110,16 @@ void	error_msg(char *message);
 void	ph_monitoring_thread(t_data *ph);
 int		ph_start_philo(t_philosopher **philo, int count, t_data *ph);
 
-void 	ph_end(t_philosopher *data, t_end end);
+void	ph_end(t_philosopher *data, t_end end);
 void	ph_sleep(t_philosopher *data);
 void	ph_eat(t_philosopher *data);
 void	ph_think(t_philosopher *data);
 void	*ph_thread(void *data);
 
 /* MUTEX */
-int lock (pthread_mutex_t *mutex);
-int unlock (pthread_mutex_t *mutex);
-int destroy (pthread_mutex_t *mutex);
+int		lock(pthread_mutex_t *mutex);
+int		unlock(pthread_mutex_t *mutex);
+int		destroy(pthread_mutex_t *mutex);
 
 /* TIME */
 long	time_now(void);
@@ -129,7 +129,8 @@ void	add_delay(t_philosopher *philo);
 /* MONITORING */
 void	*ph_monitoring(void *data);
 int		check_any_death(t_philosopher *philo);
-int		check_individual_death(t_philosopher *philo, t_state state, long action_time);
+int		check_individual_death(t_philosopher *philo, t_state state,
+			long action_time);
 void	add_max_eat(t_philosopher *philo);
 
 /* UTILS */
@@ -137,6 +138,5 @@ void	print_state(t_philosopher *philo, t_state state, long action_time);
 void	print_dead(long time, t_philosopher *philo);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 long	count_think_time(t_philosopher *philo);
-
 
 #endif

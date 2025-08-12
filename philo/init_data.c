@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 19:31:16 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/07 17:38:39 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 22:45:21 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	ph_init_data(int ac, char **av, t_data *ph)
 {
 	ph->philo_died = 0;
 	ph->philo_ended = 0;
+	ph->max_eat_count = 0;
 	ph->max_eat = 0;
 	if (!check_digits(av))
 		return (0);

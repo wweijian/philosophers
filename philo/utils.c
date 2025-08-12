@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/08 00:15:52 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/12 23:15:42 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,18 +28,15 @@ static long	last_time(long time, int type)
 void	print_state(t_philosopher *philo, t_state state, long action_time)
 {
 	long	time;
-	(void) action_time;
 
+	(void) action_time;
 	lock(&philo->data->print);
 	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
-	add_delay(philo);
 	time = time_elapsed(philo);
 	philo->last_print = time;
-	// if (time < last_time(0, 0))
-	// 	printf("ERROR IN PRINT\n");
 	last_time(time, 1);
-	printf("%ld philo %d ", time, philo->index);
+	printf("%ld %d ", time, philo->index);
 	if (state == WAITING)
 		printf("is waiting\n");
 	if (state == EATING)
@@ -50,7 +47,6 @@ void	print_state(t_philosopher *philo, t_state state, long action_time)
 		printf("is thinking\n");
 	if (state == TAKE_FORK)
 		printf("has taken a fork\n");
-	// printf("  philo->timer: %ld\n", philo->timer);
 	unlock(&philo->data->print);
 }
 
