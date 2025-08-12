@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   print.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 22:49:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/11 22:49:36 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 00:54:17 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+// void	print_state(t_philosopher *philo, t_state state, long action_time)

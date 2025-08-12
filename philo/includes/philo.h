@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 09:17:28 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/11 22:51:09 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 00:58:14 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_data
 	int						time_to_eat;
 	int						time_to_sleep;
 	int						max_eat;
-	int						max_eat_count;
+	int						finish_eating;
 	int						sim_end;
 	t_parity				parity;
 	struct s_philosopher	**philo;

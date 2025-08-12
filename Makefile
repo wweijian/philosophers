@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+         #
+#    By: weijian <weijian@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/08/11 22:54:12 by wjhoe            ###   ########.fr        #
+#    Updated: 2025/08/12 00:46:20 by weijian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,3 +76,5 @@ re: fclean all
 # --- PHONY --- #
 
 .PHONY: all clean fclean re
+
+.SILENT: ${OBJS} clean fclean ${OBJS_SUBDIR}
