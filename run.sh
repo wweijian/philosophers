@@ -6,6 +6,7 @@ if [ "$1" = "n" ] || [ "$1" = "-n" ]; then
 else
 	echo
 	if make re; then
+		clear
 		if [ $# -eq 0 ]; then
 			./philo/philo 5 800 200 200
 		elif [ "$1" = "-v" ]; then

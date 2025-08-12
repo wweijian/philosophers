@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
+/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/11 19:17:37 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/11 22:53:28 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/12 11:26:46 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,9 @@ void	start_philo(t_philosopher **philo, t_data *data)
 	{
 		if (pthread_create(&(philo[i]->thread), NULL, ph_start, philo[i]) > 0)
 			return (detach_all(philo, i));
+		i++;
 	}
+	data->start_time = time_now();
 	unlock(&data->mutex.start);
 	pthread_join(monitoring, NULL);
 }

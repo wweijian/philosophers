@@ -6,7 +6,7 @@
 #    By: weijian <weijian@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/08/12 00:46:20 by weijian          ###   ########.fr        #
+#    Updated: 2025/08/12 10:34:53 by weijian          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ CFLAGS = -Wall -Werror -Wextra -g -pthread -O0
 # --- DEFINTIONS --- #
 
 SRCS_DIR = srcs/
-SRCS = main.c philo.c actions.c
+SRCS = main.c philo.c actions.c death.c print.c
 SRCS := $(addprefix ${SRCS_DIR}, ${SRCS})
 
 INIT_DIR = init/
@@ -33,7 +33,7 @@ INIT = data.c philo.c mutex.c
 INIT := $(addprefix ${INIT_DIR}, ${INIT})
 
 UTIL_DIR = utils/
-UTIL = mutex.c data.c cleanup.c
+UTIL = mutex.c data.c cleanup.c think.c time.c
 UTIL := $(addprefix ${UTIL_DIR}, ${UTIL})
 
 SRCS += ${INIT} ${UTIL}
