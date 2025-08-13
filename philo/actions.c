@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/13 13:42:25 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:13:16 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	ph_end(t_philosopher *philo, t_end end)
 {
-	usleep(DELAY);
 	lock(&philo->data->print);
 	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);

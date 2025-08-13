@@ -6,20 +6,11 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/13 11:38:04 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:16:50 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/* 
-	need to check if eat order matters
-	helgrind one last time
-	check through the basic tests
-	check Makefile again
-	read thourgh print logic and check for redundancy
-	what is the point of the monitoring script? what would happen without it? 
-*/
 
 int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print,
 						pthread_mutex_t *end_check)
@@ -45,7 +36,7 @@ int	main(int ac, char **av)
 {
 	t_data			data;
 	t_philosopher	**philo;
-
+	
 	if (!(ac == 5 || ac == 6))
 		return (1);
 	if (av[1][0] == '0' && av[1][1] == 0)
