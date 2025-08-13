@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/13 13:12:43 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:39:44 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ int		check_individual_death(t_philosopher *philo, t_state state,
 void	add_max_eat(t_philosopher *philo);
 
 /* UTILS */
-void	print_state(t_philosopher *philo, t_state state, long action_time);
+void	print_state(t_philosopher *philo, t_state state);
 void	print_dead(long time, t_philosopher *philo);
 int		update_timer(t_philosopher *philo, t_state state, long action_time);
 long	count_think_time(t_philosopher *philo);

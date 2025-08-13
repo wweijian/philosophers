@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/13 13:20:41 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:39:32 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,10 @@ static long	last_time(long time, int type)
 	}
 }
 
-void	print_state(t_philosopher *philo, t_state state, long action_time)
+void	print_state(t_philosopher *philo, t_state state)
 {
 	long	time;
 
-	(void) action_time;
 	lock(&philo->data->print);
 	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);

@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/13 14:21:55 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:38:45 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	*ph_solo_philo(void *data)
 	pthread_mutex_unlock(&philo->data->start);
 	if (lock(&philo->fork.left) > 0)
 		return (philo->data->philo_ended = 1, error_msg(ERRMUT), NULL);
-	print_state(philo, THINKING, 0);
-	print_state(philo, TAKE_FORK, philo->data->time_to_eat);
+	print_state(philo, THINKING);
+	print_state(philo, TAKE_FORK);
 	philo->timer += philo->data->time_to_die;
 	usleep(philo->data->time_to_die * 1000);
 	if (unlock(&philo->fork.left) > 0)

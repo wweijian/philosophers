@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/13 14:13:16 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:39:18 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ph_end(t_philosopher *philo, t_end end)
 	unlock(&philo->data->print);
 	if (end == DIE)
 	{
-		print_state(philo, DEAD, philo->timer);
+		print_state(philo, DEAD);
 		lock(&philo->data->print);
 		lock(&philo->data->end_check);
 		philo->data->philo_died = 1;
@@ -37,7 +37,7 @@ void	ph_end(t_philosopher *philo, t_end end)
 
 void	ph_sleep(t_philosopher *philo)
 {
-	print_state(philo, SLEEPING, philo->data->time_to_sleep);
+	print_state(philo, SLEEPING);
 	if (!check_individual_death(philo, SLEEPING, philo->data->time_to_sleep))
 		return (ph_end(philo, DIE));
 	if (check_any_death(philo))
@@ -52,7 +52,7 @@ void	ph_think(t_philosopher *philo)
 	think_time = count_think_time(philo);
 	if (think_time == 0)
 		return (ph_eat(philo));
-	print_state(philo, THINKING, think_time);
+	print_state(philo, THINKING);
 	if (!check_individual_death(philo, THINKING, think_time))
 		return (ph_end(philo, DIE));
 	if (check_any_death(philo))
@@ -66,8 +66,8 @@ void	ph_eat(t_philosopher *philo)
 		return (add_max_eat(philo));
 	if (!take_forks(philo))
 		return (ph_end(philo, END));
-	print_state(philo, TAKE_FORK, 0);
-	print_state(philo, EATING, philo->data->time_to_eat);
+	print_state(philo, TAKE_FORK);
+	print_state(philo, EATING);
 	philo->times_eaten++;
 	if (!check_individual_death(philo, EATING, philo->data->time_to_eat))
 	{
