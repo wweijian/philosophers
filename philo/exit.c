@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 14:39:35 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/12 23:14:57 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 13:07:18 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,16 @@ void	free_philosophers(t_philosopher **philo, int count)
 void	error_msg(char *message)
 {
 	printf("%s\n", message);
+}
+
+void	detach_all(t_philosopher **philo, int count)
+{
+	int	i;
+
+	i = 0;
+	while (i < count)
+	{
+		pthread_detach(philo[i]->thread);
+		i++;
+	}
 }

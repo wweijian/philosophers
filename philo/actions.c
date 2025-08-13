@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   actions.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/12 23:38:04 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 13:42:25 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-/* 
-		actions:
-		print
-		check time (die or no die)
-		sleep and increment time
-*/
 
 void	ph_end(t_philosopher *philo, t_end end)
 {
@@ -25,16 +18,22 @@ void	ph_end(t_philosopher *philo, t_end end)
 	lock(&philo->data->print);
 	if (check_any_death(philo))
 		return (unlock(&philo->data->print), (void) 0);
-	lock(&philo->data->end_check);
+	unlock(&philo->data->print);
 	if (end == DIE)
 	{
-		printf("%ld %d died\n", philo->timer, philo->index);
+		print_state(philo, DEAD, philo->timer);
+		lock(&philo->data->print);
+		lock(&philo->data->end_check);
 		philo->data->philo_died = 1;
+		unlock(&philo->data->print);
+		unlock(&philo->data->end_check);
 	}
 	else
+	{
+		lock(&philo->data->end_check);
 		philo->data->philo_died = 1;
-	unlock(&philo->data->end_check);
-	unlock(&philo->data->print);
+		unlock(&philo->data->end_check);
+	}
 }
 
 void	ph_sleep(t_philosopher *philo)
@@ -49,7 +48,7 @@ void	ph_sleep(t_philosopher *philo)
 
 void	ph_think(t_philosopher *philo)
 {
-	long			think_time;
+	long	think_time;
 
 	think_time = count_think_time(philo);
 	if (think_time == 0)
@@ -66,8 +65,8 @@ void	ph_eat(t_philosopher *philo)
 {
 	if (philo->data->max_eat > 0 && philo->times_eaten == philo->data->max_eat)
 		return (add_max_eat(philo));
-	if ((lock(&philo->fork.left) > 0 || lock(philo->fork.right) > 0))
-		return (ph_end(philo, END), error_msg(ERRMUT), (void) 0);
+	if (!take_forks(philo))
+		return (ph_end(philo, END));
 	print_state(philo, TAKE_FORK, 0);
 	print_state(philo, EATING, philo->data->time_to_eat);
 	philo->times_eaten++;
@@ -77,8 +76,8 @@ void	ph_eat(t_philosopher *philo)
 			return (ph_end(philo, END), error_msg(ERRUNMUT), (void) 0);
 		return (ph_end(philo, DIE));
 	}
-	if ((unlock(philo->fork.right) > 0 || unlock(&philo->fork.left) > 0))
-		return (ph_end(philo, END), error_msg(ERRUNMUT), (void) 0);
+	if (!drop_forks(philo))
+		return (ph_end(philo, END));
 	if (check_any_death(philo))
 		return ;
 	ph_sleep(philo);

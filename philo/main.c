@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/12 23:38:37 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 11:38:04 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	helgrind one last time
 	check through the basic tests
 	check Makefile again
-	read thourgh print logic and check for redudnancy
+	read thourgh print logic and check for redundancy
 	what is the point of the monitoring script? what would happen without it? 
 */
 
@@ -59,6 +59,6 @@ int	main(int ac, char **av)
 	ph_start_philo(philo, data.count, &data);
 	free_philosophers(philo, data.count);
 	free(philo);
-	printf("\nSIMULATION COMPLETE\n");
+	printf("SIMULATION COMPLETE\n");
 	return (0);
 }

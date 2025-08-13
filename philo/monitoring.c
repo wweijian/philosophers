@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   monitoring.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/12 22:39:00 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/12 23:22:29 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 13:00:38 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 int	ph_max_eat(t_data *ph)
 {
 	if (ph->max_eat_count == ph->count)
-	{
-		unlock(&ph->end_check);
 		return (1);
-	}
 	return (0);
 }
 

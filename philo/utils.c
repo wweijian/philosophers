@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 00:41:01 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/12 23:15:42 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 13:20:41 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ void	print_state(t_philosopher *philo, t_state state, long action_time)
 		printf("is thinking\n");
 	if (state == TAKE_FORK)
 		printf("has taken a fork\n");
+	if (state == DEAD)
+		printf("died\n");
 	unlock(&philo->data->print);
 }
 

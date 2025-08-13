@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_philo.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/26 15:48:55 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/12 23:13:10 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 11:38:20 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	init_philosophers(t_philosopher ***philo, int count, t_data *data)
 	while (i < count)
 	{
 		if (!make_philo(*philo, i, data))
-			return (free(*philo), 0); // need to destroy all the mutexes here
+			return (free(*philo), 0);
 		i++;
 	}
 	while (i-- > 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
+/*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:31:00 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/12 23:27:44 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/13 13:12:43 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ void	init_data(t_data *ph);
 /* CLEAN UP */
 void	free_philosophers(t_philosopher **philo, int count);
 void	error_msg(char *message);
+void	detach_all(t_philosopher **philo, int count);
 
 /* SIMULATION */
 void	ph_monitoring_thread(t_data *ph);
@@ -120,6 +121,8 @@ void	*ph_thread(void *data);
 int		lock(pthread_mutex_t *mutex);
 int		unlock(pthread_mutex_t *mutex);
 int		destroy(pthread_mutex_t *mutex);
+int		take_forks(t_philosopher *philo);
+int		drop_forks(t_philosopher *philo);
 
 /* TIME */
 long	time_now(void);
