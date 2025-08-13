@@ -6,14 +6,14 @@
 #    By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/07/26 14:37:42 by weijian           #+#    #+#              #
-#    Updated: 2025/08/13 14:19:24 by wjhoe            ###   ########.fr        #
+#    Updated: 2025/08/13 14:27:27 by wjhoe            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 
 CC = cc
-CFLAGS = -Wall -Werror -Wextra -g -pthread -O0 -Iphilo/
+CFLAGS = -Wall -Werror -Wextra -g -O0 -Iphilo/
 
 SRCS_DIR = philo/
 SRCS = main.c \

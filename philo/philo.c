@@ -6,7 +6,7 @@
 /*   By: wjhoe <wjhoe@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/22 08:27:49 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/13 14:16:00 by wjhoe            ###   ########.fr       */
+/*   Updated: 2025/08/13 14:21:55 by wjhoe            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 	int	i;
 
 	i = 0;
-	pthread_create(&ph->monitoring, NULL, ph_monitoring, ph);
 	if (count == 1)
 	{
 		if (pthread_create(&(philo[i]->thread), NULL, ph_solo_philo,
@@ -47,6 +46,7 @@ int	ph_start_philo(t_philosopher **philo, int count, t_data *ph)
 		pthread_join(philo[i]->thread, NULL);
 		return (1);
 	}
+	pthread_create(&ph->monitoring, NULL, ph_monitoring, ph);
 	pthread_mutex_lock(&ph->start);
 	while (i < count)
 	{
