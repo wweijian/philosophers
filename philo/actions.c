@@ -6,7 +6,7 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/27 14:26:17 by weijian           #+#    #+#             */
-/*   Updated: 2025/08/12 23:32:55 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/12 23:38:04 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ph_think(t_philosopher *philo)
 	ph_eat(philo);
 }
 
-void	ph_eat(t_philosopher *philo) // check if fork order matterrs
+void	ph_eat(t_philosopher *philo)
 {
 	if (philo->data->max_eat > 0 && philo->times_eaten == philo->data->max_eat)
 		return (add_max_eat(philo));
@@ -72,7 +72,11 @@ void	ph_eat(t_philosopher *philo) // check if fork order matterrs
 	print_state(philo, EATING, philo->data->time_to_eat);
 	philo->times_eaten++;
 	if (!check_individual_death(philo, EATING, philo->data->time_to_eat))
+	{
+		if ((unlock(philo->fork.right) > 0 || unlock(&philo->fork.left) > 0))
+			return (ph_end(philo, END), error_msg(ERRUNMUT), (void) 0);
 		return (ph_end(philo, DIE));
+	}
 	if ((unlock(philo->fork.right) > 0 || unlock(&philo->fork.left) > 0))
 		return (ph_end(philo, END), error_msg(ERRUNMUT), (void) 0);
 	if (check_any_death(philo))

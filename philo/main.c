@@ -6,16 +6,19 @@
 /*   By: weijian <weijian@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/21 18:28:40 by wjhoe             #+#    #+#             */
-/*   Updated: 2025/08/12 23:17:09 by weijian          ###   ########.fr       */
+/*   Updated: 2025/08/12 23:38:37 by weijian          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
 /* 
-	Need to flip the fork unlock order 
-
-	whenever philo exits eat, needs to release forks
+	need to check if eat order matters
+	helgrind one last time
+	check through the basic tests
+	check Makefile again
+	read thourgh print logic and check for redudnancy
+	what is the point of the monitoring script? what would happen without it? 
 */
 
 int	init_data_mutexes(pthread_mutex_t *start, pthread_mutex_t *print,
